@@ -31,7 +31,9 @@ export const Create = async (req, res) => {
       }
     );
 
-    res.json(post);
+    res.json(
+      await post.populate("author", " avatarUrl username fristName lastName")
+    );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -47,6 +49,25 @@ export const Delete = async (req, res) => {
       }
     );
     res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const Like = async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.id });
+    const isLikes = Boolean(post.likes.find(() => req.userId));
+
+    if (!isLikes) {
+      await post.likes.push(req.userId);
+    } else {
+      await post.likes.pull(req.userId);
+    }
+
+    post.save();
+
+    return res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
