@@ -1,0 +1,7 @@
+server/node_modules/
+server/files/
+server/.env
+server/package-lock.json
+
+client/node_modules/
+client/yarn.lock

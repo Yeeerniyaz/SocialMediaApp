@@ -1,0 +1,67 @@
+.postShare {
+  border-radius: 1rem;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  padding: 10px;
+
+  div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  div > svg {
+    width: 1.5rem;
+    position: absolute;
+    right: 10px;
+    top: 0.5rem;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  div > svg:nth-child(3) {
+    right: 3rem;
+  }
+
+  div > input {
+    width: 100%;
+    background-color: var(--input-color);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .file {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .file > svg {
+    width: 2rem;
+    background-color: var(--button-color);
+    border: var(--container-border);
+    padding: 4px;
+    border-radius: 4px;
+
+  }
+
+  .file > img {
+    min-width: 100%;
+    max-height: 35rem;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+  .file > video {
+    width: 100%;
+    max-height: 35rem;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+  .file > audio {
+    min-width: 100%;
+    max-height: 35rem;
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: var(button-color);
+  }
+}

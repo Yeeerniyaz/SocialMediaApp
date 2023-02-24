@@ -1,0 +1,63 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  border-radius: 1rem;
+  gap: 1rem;
+
+  .author {
+    display: flex;
+    align-items: center;
+    gap: rem;
+  }
+
+  .author > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .author > div > span:nth-of-type(1) {
+    font-weight: bold;
+  }
+
+  .author > div > span:nth-of-type(2) {
+    font-size: small;
+    opacity: 0.7;
+  }
+  .author > div > span:nth-of-type(2):hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+}
+
+.post > img {
+  width: 100%;
+  max-height: 35rem;
+  border-radius: 10px;
+}
+
+.post > video {
+  width: 100%;
+  max-height: 35rem;
+  border-radius: 10px;
+}
+
+.post > audio {
+  width: 100%;
+  max-height: 35rem;
+  border-radius: 10px;
+}
+
+.post > svg {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+.postReact {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
