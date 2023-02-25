@@ -72,3 +72,25 @@ export const Like = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const CreateComment = async (req, res) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.id });
+
+    if (req.body.text) {
+      const doc = {
+        date: Date.now(),
+        text: req.body.text,
+        author: req.userId,
+      };
+
+      await post.comments.push(doc);
+      post.save();
+      return res.json(post.comments);
+    } else {
+      return res.status(400);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axios";
 
 import { UilComment } from "@iconscout/react-unicons";
 import { UilHeart } from "@iconscout/react-unicons";
+import { UilMessage } from "@iconscout/react-unicons";
 import redHeard from "../../image/redHeard.png";
 import { fileSorter } from "../../Utils/sorter";
 
+import axios from "../../axios";
 import "./post.scss";
 import Comments from "../Comments/Comments.jsx";
 
@@ -16,6 +17,7 @@ const Post = ({ obj }) => {
   const isLikes = Boolean(obj.likes.find(() => user._id));
   const [likeCount, setIsCount] = React.useState(obj.likes.length);
   const [isLiked, setIsLiked] = React.useState(isLikes);
+  const [text, setText] = React.useState("");
   const navigate = useNavigate();
 
   const LikeButton = () => {
@@ -27,6 +29,10 @@ const Post = ({ obj }) => {
       setIsCount(likeCount + 1);
     }
     axios.get(`post/like/${obj._id}`);
+  };
+
+  const CommentCreate = () => {
+    axios.post(`post/comment/${obj._id}`, text);
   };
 
   return (
@@ -66,7 +72,7 @@ const Post = ({ obj }) => {
 
       <div className="postDetail">
         <div onClick={LikeButton}>
-          {isLiked ? <img src={redHeard} /> : <UilHeart />}
+          {isLiked ? <img src={redHeard} alt="" /> : <UilHeart />}
           <span>{likeCount} </span>
         </div>
         <div>
@@ -74,7 +80,19 @@ const Post = ({ obj }) => {
           <span>{obj.comments.length} </span>
         </div>
       </div>
-      <Comments/>
+      {obj.comments.map((obj) => {
+        return <Comments obj={obj} key={obj.date} />;
+      })}
+
+      <div className="commentBlock">
+        <input
+          type="text"
+          placeholder="Написать комментарий..."
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <UilMessage onClick={CommentCreate} />
+      </div>
     </div>
   );
 };

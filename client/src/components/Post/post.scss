@@ -78,7 +78,7 @@
     background-color: var(--button-color);
     padding: 5px 20px;
     border-radius: 20px;
-    
+
     &:hover {
       background-color: #000000;
     }
@@ -87,6 +87,26 @@
   div > svg,
   img {
     width: 1.1rem;
+    opacity: 0.7;
+  }
+}
+
+.commentBlock {
+  margin-top: 10px;
+  width: 100%;
+  position: relative;
+
+  input {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--input-color);
+  }
+
+  svg {
+    position: absolute;
+    right: 10px;
+    top: 8px;
     opacity: 0.7;
   }
 }

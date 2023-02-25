@@ -3,8 +3,8 @@ import React from "react";
 import "./style.scss";
 
 
-const Comments = () => {
-  return <div></div>;
+const Comments = ({obj}) => {
+  return <div className='jkdsvb'>dddd</div>;
 };
 
 export default Comments;

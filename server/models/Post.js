@@ -23,8 +23,13 @@ const PostSchema = new mongoose.Schema(
 
     comments: [
       {
+        date: {
+          type: Date,
+          default: Date.now(),
+        },
         text: {
           type: String,
+          required: true,
         },
         author: {
           type: mongoose.Schema.Types.ObjectId,
