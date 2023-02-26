@@ -22,6 +22,14 @@ export const fetchDeletePost = createAsyncThunk(
   }
 );
 
+export const fetchCreateComment = createAsyncThunk(
+  "post/fetchCreateComment",
+  async ({ id, text }) => {
+    const data = await axios.post(`/post/comment/${id}`, { text: text });
+    return data;
+  }
+);
+
 const initialState = {
   data: undefined,
   status: "loading",

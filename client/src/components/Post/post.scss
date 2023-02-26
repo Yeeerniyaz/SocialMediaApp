@@ -10,7 +10,19 @@
   .author {
     display: flex;
     align-items: center;
-    gap: rem;
+    justify-content: space-between;
+
+    svg {
+      width: 2.3rem;
+      background-color: var(--button-color);
+      padding: 3px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:hver {
+        background-color: #000000;
+      }
+    }
   }
 
   .author > div {

@@ -3,11 +3,12 @@ import Post from "../models/Post.js";
 
 export const GetAll = async (req, res) => {
   try {
-    const posts = await Post.find().populate(
-      "author",
-      " avatarUrl username fristName lastName"
-    );
-
+    const posts = await Post.find()
+      .populate("author", " avatarUrl username fristName lastName")
+      .populate({
+        path: "comments.author",
+        select: " avatarUrl username fristName lastName",
+      });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -77,7 +78,7 @@ export const CreateComment = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.id });
 
-    if (req.body.text) {
+    if (Boolean(req.body.text)) {
       const doc = {
         date: Date.now(),
         text: req.body.text,
@@ -87,8 +88,10 @@ export const CreateComment = async (req, res) => {
       await post.comments.push(doc);
       post.save();
       return res.json(post.comments);
-    } else {
-      return res.status(400);
+    }
+
+    if (Boolean(req.body.text) === false) {
+      return res.status(404).json({ message: "Missing" });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
