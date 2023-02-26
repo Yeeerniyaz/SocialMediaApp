@@ -5,9 +5,12 @@ const PostSchema = new mongoose.Schema(
     title: {
       type: String,
     },
+
     file: {
       type: String,
     },
+
+    tags: ["String"],
 
     author: {
       type: mongoose.Schema.Types.ObjectId,

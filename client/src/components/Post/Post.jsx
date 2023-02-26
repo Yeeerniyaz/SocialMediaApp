@@ -10,12 +10,13 @@ import { UilHeart } from "@iconscout/react-unicons";
 import { UilMessage } from "@iconscout/react-unicons";
 import { UilUserPlus } from "@iconscout/react-unicons";
 import { UilUserMinus } from "@iconscout/react-unicons";
+import { UilTrash } from "@iconscout/react-unicons";
 import redHeard from "../../image/redHeard.png";
 
 import "./post.scss";
 import axios from "../../axios";
 import Comments from "../Comments/Comments.jsx";
-import { fetchCreateComment } from "../../redux/slices/post";
+import { fetchCreateComment, fetchDeletePost } from "../../redux/slices/post";
 import { fileSorter } from "../../Utils/sorter";
 
 const Post = ({ obj }) => {
@@ -32,6 +33,20 @@ const Post = ({ obj }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  function buttonSubscribe() {
+    if (subscribe) {
+      setSubscribe(false);
+      axios.patch(`/user/un/${obj.author._id}`);
+    } else {
+      setSubscribe(true);
+      axios.patch(`/user/i/${obj.author._id}`);
+    }
+  }
+
+  function postDelete() {
+    dispatch(fetchDeletePost(obj._id));
+  }
+
   function likeButton() {
     if (isLiked) {
       setIsLiked(false);
@@ -43,19 +58,13 @@ const Post = ({ obj }) => {
     axios.get(`post/like/${obj._id}`);
   }
 
-  function buttonSubscribe() {
-    if (subscribe) {
-      setSubscribe(false);
-      axios.patch(`/user/un/${obj.author._id}`);
-    } else {
-      setSubscribe(true);
-      axios.patch(`/user/i/${obj.author._id}`);
-    }
+  function commentDelete() {
+    axios.delete()
   }
 
-  const CommentCreate = async () => {
+  async function commentCreate() {
     await dispatch(fetchCreateComment({ id: obj._id, text }));
-  };
+  }
 
   return (
     <div className="post">
@@ -67,16 +76,28 @@ const Post = ({ obj }) => {
           </span>
           <span>{date.calendar()}</span>
         </div>
-        {user._id !== obj.author._id &&
-          (subscribe ? (
+        {user._id !== obj.author._id ? (
+          subscribe ? (
             <UilUserMinus onClick={buttonSubscribe} />
           ) : (
             <UilUserPlus onClick={buttonSubscribe} />
-          ))}
+          )
+        ) : (
+          <UilTrash onClick={postDelete} />
+        )}
       </div>
 
       <div className="title">
         <p>{obj.title}</p>
+        {obj.tags.map((t) => (
+          <span
+            onClick={() => {
+              navigate(`/tag/${t}`);
+            }}
+          >
+            #{t}{" "}
+          </span>
+        ))}
       </div>
 
       {obj.file && (
@@ -118,7 +139,7 @@ const Post = ({ obj }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <UilMessage onClick={CommentCreate} />
+        <UilMessage onClick={commentCreate} />
       </div>
     </div>
   );

@@ -17,8 +17,12 @@ export const GetAll = async (req, res) => {
 
 export const Create = async (req, res) => {
   try {
+    const tags = req.body.title.split("#");
+    const title = tags.shift();
+
     const doc = new Post({
-      title: req.body.title,
+      title: title,
+      tags: tags,
       file: req.body.file,
       author: req.userId,
     });
@@ -93,6 +97,19 @@ export const CreateComment = async (req, res) => {
     if (Boolean(req.body.text) === false) {
       return res.status(404).json({ message: "Missing" });
     }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const deleteComment = async (req, res) => {
+  try {
+    await User.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $pull: { comments: req.params.postId },
+      }
+    );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
