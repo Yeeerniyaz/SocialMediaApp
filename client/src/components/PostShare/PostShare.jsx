@@ -6,6 +6,7 @@ import { fileSorter } from "../../Utils/sorter";
 import "./style.scss";
 import { useDispatch } from "react-redux";
 import { fetchCreatePost } from "../../redux/slices/post";
+import { addPost } from "../../redux/slices/auth";
 
 const PostShare = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,11 @@ const PostShare = () => {
   };
 
   const onSubmit = async () => {
-    await dispatch(fetchCreatePost({ file: fileUrl, title }));
+    const data = await dispatch(fetchCreatePost({ file: fileUrl, title }));
+    dispatch(addPost(data.payload));
+    setTitle("");
+    setFileUrl("");
+    fileRef.current.value = null;
   };
 
   return (

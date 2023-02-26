@@ -25,7 +25,15 @@ export const fetchDeletePost = createAsyncThunk(
 export const fetchCreateComment = createAsyncThunk(
   "post/fetchCreateComment",
   async ({ id, text }) => {
-    const data = await axios.post(`/post/comment/${id}`, { text: text });
+    const { data } = await axios.post(`/post/comment/${id}`, { text: text });
+    return data;
+  }
+);
+
+export const fetchdeleteComment = createAsyncThunk(
+  "post/fetchDeleteComment",
+  async ({ id, postId }) => {
+    const { data } = await axios.delete(`/post/comment/${postId}/${id}`);
     return data;
   }
 );
@@ -42,7 +50,7 @@ const PostSlices = createSlice({
   extraReducers: (bulider) => {
     bulider
       .addCase(fetchCreatePost.fulfilled, (state, action) => {
-        state.data.push(action.payload);
+        state.date = state.data.unshift(action.payload);
       })
       .addCase(fetchGetPost.pending, (state) => {
         state.status = "loading";
@@ -54,7 +62,14 @@ const PostSlices = createSlice({
       .addCase(fetchGetPost.rejected, (state) => {
         state.status = "error";
       })
-      .addCase(fetchDeletePost.pending, (state) => {});
+      .addCase(fetchDeletePost.pending, (state, action) => {
+        state.data = state.data.filter((obj) => obj._id !== action.meta.arg);
+      })
+      .addCase(fetchCreateComment.fulfilled, (state, action) => {
+        state.data[
+          state.data.findIndex(({ _id }) => _id === action.meta.arg.id)
+        ].comments.unshift(action.payload.pop());
+      });
   },
 });
 

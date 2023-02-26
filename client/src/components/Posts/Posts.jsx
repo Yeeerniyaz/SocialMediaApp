@@ -6,9 +6,10 @@ import Post from "../Post/Post.jsx";
 
 const Posts = () => {
   const PostData = useSelector((state) => state.post.data);
-  const isloading = useSelector((state) => state.post.status);
+  const isloadingP = useSelector((state) => state.post.status);
+  const isloadingA = useSelector((state) => state.auth.status);
 
-  if (isloading !== "loaded") {
+  if (isloadingP !== "loaded" || isloadingA !== "loaded") {
     return <div>Loading</div>;
   }
   return (

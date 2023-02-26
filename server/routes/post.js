@@ -22,6 +22,6 @@ router.get("/like/:id", CheckAuth, Like);
 
 router.post("/comment/:id", CheckAuth, CreateComment);
 
-router.get("/comment/:postId/:id", CheckAuth, DeleteComment);
+router.delete("/comment/:postId/:id", CheckAuth, DeleteComment);
 
 export default router;

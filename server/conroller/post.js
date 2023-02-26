@@ -8,7 +8,8 @@ export const GetAll = async (req, res) => {
       .populate({
         path: "comments.author",
         select: " avatarUrl username fristName lastName",
-      });
+      })
+      .sort({ createdAt: -1 });
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -91,7 +92,15 @@ export const CreateComment = async (req, res) => {
 
       await post.comments.push(doc);
       post.save();
-      return res.json(post.comments);
+
+      await post.populate({
+        path: "comments.author",
+        select: " avatarUrl username fristName lastName",
+      });
+
+      return res.json(
+        post.comments
+      );
     }
 
     if (Boolean(req.body.text) === false) {
@@ -105,7 +114,10 @@ export const CreateComment = async (req, res) => {
 export const DeleteComment = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.postId });
-    console.log(req.params);
+
+    await post.comments.pull({ _id: req.params.id });
+    post.save();
+
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: err.message });

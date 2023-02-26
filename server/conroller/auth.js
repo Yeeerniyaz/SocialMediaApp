@@ -46,7 +46,7 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const username = req.body.email.split("@")[0];
-    const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: username }).populate("posts");
     if (!user) {
       return res
         .status(403)
@@ -67,7 +67,7 @@ export const Login = async (req, res) => {
 
     user.password = undefined;
 
-    res.json({ user, token });
+    res.json({ token, user });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -75,7 +75,7 @@ export const Login = async (req, res) => {
 
 export const GetMe = async (req, res) => {
   try {
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.userId).populate("posts");
     if (!user) {
       return res.status(404).json({ message: "No access" });
     }
@@ -111,7 +111,7 @@ export const Update = async (req, res) => {
 
     user.password = undefined;
 
-    res.json(user);
+    res.json(user.populate("posts"));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -10,9 +10,11 @@ import { UilTrash } from "@iconscout/react-unicons";
 
 import "./style.scss";
 import axios from "../../axios";
+import { fetchdeleteComment } from "../../redux/slices/post";
 
 const Comments = ({ obj, postId }) => {
   const user = useSelector((state) => state.auth.data);
+  const posts = useSelector((state) => state.post.data);
   const findFollow = Boolean(
     user.follows.find((arr) => arr === obj.author._id)
   );
@@ -31,10 +33,11 @@ const Comments = ({ obj, postId }) => {
     }
   }
 
+  const post = posts.find(({ _id }) => _id === postId);
+  console.log(post);
   async function commentDelete() {
-    axios.get(`/post/comment/${postId}/${obj._id}`);
+    dispatch(fetchdeleteComment({ postId, id: obj._id }));
   }
-
 
   return (
     <div className="comment">

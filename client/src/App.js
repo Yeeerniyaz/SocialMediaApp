@@ -1,10 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
-import { fetchAuth } from "./redux/slices/auth.js";
+import { fetchAuth, SelectIsAuth } from "./redux/slices/auth.js";
 import { fetchGetPost } from "./redux/slices/post";
 
 function App() {
@@ -13,11 +13,20 @@ function App() {
     dispatch(fetchAuth());
     dispatch(fetchGetPost());
   }, [dispatch]);
+
+  const data = useSelector(SelectIsAuth);
+  const token = window.localStorage.getItem("token");
+
+  const isAuth = data || token;
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/" element={<Home />} />
+        {isAuth ? (
+          <Route path="/" element={<Home />} />
+        ) : (
+          <Route path="/" element={<Auth />} />
+        )}
       </Routes>
     </BrowserRouter>
   );

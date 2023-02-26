@@ -17,34 +17,38 @@ import "./post.scss";
 import axios from "../../axios";
 import Comments from "../Comments/Comments.jsx";
 import { fetchCreateComment, fetchDeletePost } from "../../redux/slices/post";
+import { removePost } from "../../redux/slices/auth";
+import { addFollow, removeFollow } from "../../redux/slices/auth";
 import { fileSorter } from "../../Utils/sorter";
 
 const Post = ({ obj }) => {
   const date = new moment(obj.createdAt);
   const user = useSelector((state) => state.auth.data);
   const isLikes = Boolean(obj.likes.find((arr) => arr === user._id));
-  const findFollow = Boolean(
-    user.follows.find((arr) => arr === obj.author._id)
-  );
+  const findFollow = user.follows.find((arr) => arr === obj.author._id);
   const [likeCount, setIsCount] = React.useState(obj.likes.length);
   const [isLiked, setIsLiked] = React.useState(isLikes);
   const [subscribe, setSubscribe] = React.useState(findFollow);
   const [text, setText] = React.useState("");
+  const isFollow = user.follows;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   function buttonSubscribe() {
     if (subscribe) {
       setSubscribe(false);
+      dispatch(removeFollow(obj.author._id));
       axios.patch(`/user/un/${obj.author._id}`);
     } else {
       setSubscribe(true);
+      dispatch(addFollow(obj.author._id));
       axios.patch(`/user/i/${obj.author._id}`);
     }
   }
 
   function postDelete() {
     dispatch(fetchDeletePost(obj._id));
+    dispatch(removePost(obj._id));
   }
 
   function likeButton() {
@@ -127,8 +131,8 @@ const Post = ({ obj }) => {
         </div>
       </div>
 
-      {obj.comments.slice(0, 2).map((obj) => {
-        return <Comments obj={obj} postId={obj._id} key={obj.date} />;
+      {obj.comments.slice(0, 2).map((com) => {
+        return <Comments obj={com} postId={obj._id} key={com.date} />;
       })}
 
       <div className="commentBlock">
