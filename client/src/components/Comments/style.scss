@@ -2,9 +2,9 @@
   padding: 10px;
   background-color: var(--button-color);
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 
-  .CmmetAuthor {
-    font-size: small;
-  }
 
 }

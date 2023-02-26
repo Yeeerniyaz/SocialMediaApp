@@ -42,3 +42,8 @@ body {
 .button:hover {
   background-color: #000000;
 }
+
+hr {
+  width: 100%;
+  border-top: var(--container-border);
+}

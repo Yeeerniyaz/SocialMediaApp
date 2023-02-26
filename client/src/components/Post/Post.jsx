@@ -58,10 +58,6 @@ const Post = ({ obj }) => {
     axios.get(`post/like/${obj._id}`);
   }
 
-  function commentDelete() {
-    axios.delete()
-  }
-
   async function commentCreate() {
     await dispatch(fetchCreateComment({ id: obj._id, text }));
   }
@@ -87,15 +83,18 @@ const Post = ({ obj }) => {
         )}
       </div>
 
+      <hr />
+
       <div className="title">
         <p>{obj.title}</p>
         {obj.tags.map((t) => (
           <span
+            key={t}
             onClick={() => {
               navigate(`/tag/${t}`);
             }}
           >
-            #{t}{" "}
+            #{t}
           </span>
         ))}
       </div>
@@ -129,7 +128,7 @@ const Post = ({ obj }) => {
       </div>
 
       {obj.comments.slice(0, 2).map((obj) => {
-        return <Comments obj={obj} key={obj.date} />;
+        return <Comments obj={obj} postId={obj._id} key={obj.date} />;
       })}
 
       <div className="commentBlock">

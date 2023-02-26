@@ -102,14 +102,11 @@ export const CreateComment = async (req, res) => {
   }
 };
 
-export const deleteComment = async (req, res) => {
+export const DeleteComment = async (req, res) => {
   try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        $pull: { comments: req.params.postId },
-      }
-    );
+    const post = await Post.findOne({ _id: req.params.postId });
+    console.log(req.params);
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
