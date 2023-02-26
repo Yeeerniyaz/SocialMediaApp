@@ -20,7 +20,7 @@ router.get("/followers", CheckAuth, followers);
 
 router.get("/follows", CheckAuth, follows);
 
-router.get("/i/:id", CheckAuth, UserAdd);
+router.patch("/i/:id", CheckAuth, UserAdd);
 
 router.patch("/un/:id", CheckAuth, UserDelete);
 

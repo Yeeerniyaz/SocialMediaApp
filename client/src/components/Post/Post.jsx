@@ -46,10 +46,10 @@ const Post = ({ obj }) => {
   function buttonSubscribe() {
     if (subscribe) {
       setSubscribe(false);
-      axios.get(`/user/un/${obj.username}`);
+      axios.patch(`/user/un/${obj.author._id}`);
     } else {
       setSubscribe(true);
-      axios.get(`/user/i/${obj.author._id}`);
+      axios.patch(`/user/i/${obj.author._id}`);
     }
   }
 
