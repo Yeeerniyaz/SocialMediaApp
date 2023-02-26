@@ -46,13 +46,15 @@ const Post = ({ obj }) => {
   function buttonSubscribe() {
     if (subscribe) {
       setSubscribe(false);
+      axios.get(`/user/un/${obj.username}`);
     } else {
       setSubscribe(true);
+      axios.get(`/user/i/${obj.author._id}`);
     }
   }
 
   const CommentCreate = async () => {
-    const data = await dispatch(fetchCreateComment({ id: obj._id, text }));
+    await dispatch(fetchCreateComment({ id: obj._id, text }));
   };
 
   return (
@@ -66,7 +68,11 @@ const Post = ({ obj }) => {
           <span>{date.calendar()}</span>
         </div>
         {user._id !== obj.author._id &&
-          (subscribe ? <UilUserMinus /> : <UilUserPlus />)}
+          (subscribe ? (
+            <UilUserMinus onClick={buttonSubscribe} />
+          ) : (
+            <UilUserPlus onClick={buttonSubscribe} />
+          ))}
       </div>
 
       <div className="title">

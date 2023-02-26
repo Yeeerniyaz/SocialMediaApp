@@ -13,12 +13,6 @@ const ProfileCard = () => {
   const profile = useSelector((state) => state.auth.data);
   const isLoading = useSelector((state) => state.auth.status);
 
-  const user = {
-    subscribers: 451000,
-    subscriptions: 6,
-    post: 45,
-  };
-
   function Clicklogout() {
     window.localStorage.removeItem("token");
     dispatch(logout());

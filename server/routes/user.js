@@ -20,8 +20,8 @@ router.get("/followers", CheckAuth, followers);
 
 router.get("/follows", CheckAuth, follows);
 
-router.patch("/:username", CheckAuth, UserAdd);
+router.get("/i/:id", CheckAuth, UserAdd);
 
-router.delete("/:username", CheckAuth, UserDelete);
+router.patch("/un/:id", CheckAuth, UserDelete);
 
 export default router;

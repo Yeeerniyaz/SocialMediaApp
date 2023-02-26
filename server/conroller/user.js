@@ -43,19 +43,11 @@ export const follows = async (req, res) => {
 
 export const UserAdd = async (req, res) => {
   try {
-    await User.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        $push: { followers: req.userId },
-      }
-    );
+    const user = await User.findById(req.userId);
+    const candidate = await User.findById(req.params.id);
 
-    await User.findOneAndUpdate(
-      { _id: req.userId },
-      {
-        $push: { follows: req.params.id },
-      }
-    );
+    console.log(user + candidate);
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
