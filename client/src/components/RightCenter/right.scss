@@ -1,0 +1,23 @@
+.RightSide {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .navIcon {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.1rem;
+    background-color: var(--container-color);
+    border: var(--container-border);
+    border-radius: 1rem;
+
+    svg {
+      width: 1.5rem;
+      opacity: 0.7;
+      &:hover {
+        cursor: pointer;
+		opacity: 1;
+      }
+    }
+  }
+}

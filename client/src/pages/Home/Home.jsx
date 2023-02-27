@@ -3,6 +3,7 @@ import React from "react";
 import "./Home.scss";
 import Left from "../../components/HomeLeft/HomeLeft.jsx";
 import Center from "../../components/HomeCenter/HomeCenter.jsx";
+import Right from "../../components/RightCenter/RightCenter.jsx";
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
       <div className="home">
         <Left />
         <Center />
-        <div>R</div>
+        <Right/>
       </div>
     </div>
   );

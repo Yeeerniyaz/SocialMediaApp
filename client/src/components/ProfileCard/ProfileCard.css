@@ -98,6 +98,10 @@
   color: var(--text-color);
 }
 
+.ProfieCard > .controler > div {
+  cursor: pointer;
+}
+
 .log-btn {
   padding: 5px 20px;
 }

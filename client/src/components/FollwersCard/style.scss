@@ -1,0 +1,54 @@
+.FollwersCard {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  border-radius: 1rem;
+  padding: 10px;
+
+  
+
+  h3 {
+    padding-left: 10px;
+	margin-bottom: 10px;
+  }
+  .users {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 1rem;
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: #00000090;
+	  cursor: pointer;
+    }
+  }
+
+  .users > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .span > span:nth-of-type(1) {
+    font-weight: bold;
+  }
+
+  .span span:nth-of-type(2) {
+    font-family: var(--en-font);
+    font-size: small;
+  }
+
+  .users > div > img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+}
