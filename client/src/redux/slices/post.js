@@ -69,6 +69,13 @@ const PostSlices = createSlice({
         state.data[
           state.data.findIndex(({ _id }) => _id === action.meta.arg.id)
         ].comments.unshift(action.payload.pop());
+      })
+      .addCase(fetchdeleteComment.pending, (state, action) => {
+        state.data[
+          state.data.findIndex(({ _id }) => _id === action.meta.arg.postId)
+        ].comments = state.data[
+          state.data.findIndex(({ _id }) => _id === action.meta.arg.postId)
+        ].comments.filter(({ _id }) => _id !== action.meta.arg.id);
       });
   },
 });

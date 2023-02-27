@@ -9,31 +9,24 @@ import { UilUserMinus } from "@iconscout/react-unicons";
 import { UilTrash } from "@iconscout/react-unicons";
 
 import "./style.scss";
-import axios from "../../axios";
 import { fetchdeleteComment } from "../../redux/slices/post";
+import { fetchAddFollow, fetchRemoveFollow } from "../../redux/slices/auth";
 
 const Comments = ({ obj, postId }) => {
   const user = useSelector((state) => state.auth.data);
-  const posts = useSelector((state) => state.post.data);
-  const findFollow = Boolean(
-    user.follows.find((arr) => arr === obj.author._id)
-  );
-  const [subscribe, setSubscribe] = React.useState(findFollow);
+  const isFollow = user.follows;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const date = new moment(obj.date);
 
   function buttonSubscribe() {
-    if (subscribe) {
-      setSubscribe(false);
-      axios.patch(`/user/un/${obj.author._id}`);
+    if (isFollow.some((e) => e === obj.author._id)) {
+      dispatch(fetchRemoveFollow(obj.author._id));
     } else {
-      setSubscribe(true);
-      axios.patch(`/user/i/${obj.author._id}`);
+      dispatch(fetchAddFollow(obj.author._id));
     }
   }
 
-  const post = posts.find(({ _id }) => _id === postId);
   async function commentDelete() {
     dispatch(fetchdeleteComment({ postId, id: obj._id }));
   }
@@ -49,14 +42,14 @@ const Comments = ({ obj, postId }) => {
           <span>{date.calendar()}</span>
         </div>
         {user._id !== obj.author._id ? (
-          subscribe ? (
+          isFollow.some((e) => e === obj.author._id) ? (
             <UilUserMinus onClick={buttonSubscribe} />
           ) : (
             <UilUserPlus onClick={buttonSubscribe} />
           )
         ) : (
           <UilTrash onClick={commentDelete} />
-        )}
+        )} 
       </div>
       <hr />
       <p>{obj.text}</p>

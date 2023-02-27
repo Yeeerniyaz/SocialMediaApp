@@ -22,7 +22,6 @@ import {
   fetchRemoveFollow,
   removePost,
 } from "../../redux/slices/auth";
-import { addFollow, removeFollow } from "../../redux/slices/auth";
 import { fileSorter } from "../../Utils/sorter";
 
 const Post = ({ obj }) => {
@@ -32,11 +31,10 @@ const Post = ({ obj }) => {
   const [likeCount, setIsCount] = React.useState(obj.likes.length);
   const [isLiked, setIsLiked] = React.useState(isLikes);
   const [text, setText] = React.useState("");
+  const [showAll, setShowAll] = React.useState(false);
   const isFollow = user.follows;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  console.log(isFollow.some((e) => e === obj.author._id));
 
   function buttonSubscribe() {
     if (isFollow.some((e) => e === obj.author._id)) {
@@ -63,7 +61,9 @@ const Post = ({ obj }) => {
   }
 
   async function commentCreate() {
+    setText('')
     await dispatch(fetchCreateComment({ id: obj._id, text }));
+
   }
 
   return (
@@ -130,10 +130,23 @@ const Post = ({ obj }) => {
           <span>{obj.comments.length} </span>
         </div>
       </div>
+      <div className="Comments">
+        {showAll &&
+          obj.comments.map((com) => {
+            return <Comments obj={com} postId={obj._id} key={com.date} />;
+          })}
+      </div>
 
-      {obj.comments.slice(0, 2).map((com) => {
-        return <Comments obj={com} postId={obj._id} key={com.date} />;
-      })}
+      {obj.comments.length > 0 && (
+        <div
+          className="showAll"
+          onClick={() => {
+            setShowAll(!showAll);
+          }}
+        >
+          {showAll ? "Скрыть комментарий" : "Показать комментарий"}
+        </div>
+      )}
 
       <div className="commentBlock">
         <input

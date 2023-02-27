@@ -6,7 +6,6 @@
   border: var(--container-border);
   border-radius: 1rem;
   gap: 0.5rem;
-
   .author {
     display: flex;
     align-items: center;
@@ -23,6 +22,15 @@
       &:hver {
         background-color: #000000;
       }
+    }
+  }
+
+  .showAll {
+    opacity: 0.5;
+    font-size: x-small;
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
     }
   }
 
@@ -43,6 +51,14 @@
   .author > div > span:nth-of-type(2):hover {
     opacity: 1;
     cursor: pointer;
+  }
+
+  .Comments {
+    max-height: 20rem; 
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
