@@ -6,7 +6,7 @@ import "./left.scss";
 
 const PofileSide = () => {
   return (
-    <div className="HomeLeft">
+    <div className="homeLeft">
       <ProfileCard />
       <FollwersCard />
     </div>

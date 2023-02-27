@@ -6,12 +6,13 @@ import { UilMapMarker, UilBag, UilInstagram } from "@iconscout/react-unicons";
 import "./ProfileCard.css";
 import { logout } from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
-import { Link } from "react-router-dom";
+import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
 
 const ProfileCard = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.data);
   const isLoading = useSelector((state) => state.auth.status);
+  const [openedModal, setOpenedModal] = React.useState(true);
 
   function Clicklogout() {
     window.localStorage.removeItem("token");
@@ -90,7 +91,17 @@ const ProfileCard = () => {
       </div>
 
       <div className="controler">
-        <Link to={`/profile/${profile.username}`}>My profile</Link>
+        <ProfileEditModal
+          setOpenedModal={setOpenedModal}
+          openedModal={openedModal}
+        />
+        <div
+          onClick={() => {
+            setOpenedModal(true);
+          }}
+        >
+          Редактировать
+        </div>
         <button className="button log-btn" onClick={Clicklogout}>
           Logout
         </button>

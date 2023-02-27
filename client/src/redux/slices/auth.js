@@ -25,8 +25,8 @@ export const fetchRegister = createAsyncThunk(
 
 export const fetchUpdate = createAsyncThunk(
   "auth/fetchUpdate",
-  async (params) => {
-    const { data } = await axios.post("/auth/update", params);
+  async ({ params }) => {
+    const { data } = await axios.patch("/auth/update", params);
     return data;
   }
 );
@@ -112,7 +112,7 @@ const AuthSlices = createSlice({
       // !	fetchUpdate // // // // // // // // // // // //////////////////////////////////
       .addCase(fetchUpdate.fulfilled, (state, action) => {
         state.status = "loaded";
-        state.data = action.data;
+        state.data = action.payload;
       })
       // !	fetchUpdatePassword // // // // // // // // // // // /////////////////////////
       .addCase(fetchUpdatePassword.fulfilled, (state, action) => {
