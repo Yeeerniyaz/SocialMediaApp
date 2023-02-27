@@ -17,7 +17,7 @@ function App() {
   const data = useSelector(SelectIsAuth);
   const token = window.localStorage.getItem("token");
 
-  const isAuth = data || token;
+  const isAuth = data && token;
 
   return (
     <BrowserRouter>

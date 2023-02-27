@@ -34,7 +34,6 @@ const Comments = ({ obj, postId }) => {
   }
 
   const post = posts.find(({ _id }) => _id === postId);
-  console.log(post);
   async function commentDelete() {
     dispatch(fetchdeleteComment({ postId, id: obj._id }));
   }

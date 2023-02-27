@@ -98,9 +98,7 @@ export const CreateComment = async (req, res) => {
         select: " avatarUrl username fristName lastName",
       });
 
-      return res.json(
-        post.comments
-      );
+      return res.json(post.comments);
     }
 
     if (Boolean(req.body.text) === false) {

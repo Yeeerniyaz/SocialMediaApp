@@ -39,6 +39,22 @@ export const fetchUpdatePassword = createAsyncThunk(
   }
 );
 
+export const fetchAddFollow = createAsyncThunk(
+  "fetchAddFollow",
+  async (params) => {
+    const { data } = await axios.patch(`/user/i/${params}`);
+    return data;
+  }
+);
+
+export const fetchRemoveFollow = createAsyncThunk(
+  "auth/fetchRemoveFollow",
+  async (params) => {
+    const { data } = await axios.patch(`/user/un/${params}`);
+    return data;
+  }
+);
+
 const initialState = {
   data: null,
   status: "loading",
@@ -58,11 +74,11 @@ const AuthSlices = createSlice({
       state.data.posts = state.data.posts.filter((post) => post._id === params);
     },
     addFollow: (state, params) => {
-      state.data.follows.push(params);
+      state.data.follows.push(params.payload);
     },
     removeFollow: (state, params) => {
       state.data.follows = state.data.follows.filter(
-        (follow) =>  follow.payload && follow === params
+        (follow) => follow !== params.payload
       );
     },
   },
@@ -110,6 +126,14 @@ const AuthSlices = createSlice({
       .addCase(fetchUpdatePassword.fulfilled, (state, action) => {
         state.status = "loaded";
         state.data = action.data;
+      })
+      .addCase(fetchAddFollow.pending, (state, action) => {
+        state.data.follows.push(action.meta.arg);
+      })
+      .addCase(fetchRemoveFollow.pending, (state, action) => {
+        state.data.follows = state.data.follows.filter(
+          (follow) => follow !== action.meta.arg
+        );
       });
   },
 });
