@@ -73,14 +73,6 @@ const AuthSlices = createSlice({
     removePost: (state, params) => {
       state.data.posts = state.data.posts.filter((post) => post._id === params);
     },
-    addFollow: (state, params) => {
-      state.data.follows.push(params.payload);
-    },
-    removeFollow: (state, params) => {
-      state.data.follows = state.data.follows.filter(
-        (follow) => follow !== params.payload
-      );
-    },
   },
   extraReducers: (bulider) => {
     bulider
@@ -142,6 +134,4 @@ export const AuthReducer = AuthSlices.reducer;
 export const { logout } = AuthSlices.actions;
 export const { addPost } = AuthSlices.actions;
 export const { removePost } = AuthSlices.actions;
-export const { addFollow } = AuthSlices.actions;
-export const { removeFollow } = AuthSlices.actions;
 export const SelectIsAuth = (state) => Boolean(state.auth.data);

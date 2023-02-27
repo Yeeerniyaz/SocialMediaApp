@@ -6,6 +6,7 @@ import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import { fetchAuth, SelectIsAuth } from "./redux/slices/auth.js";
 import { fetchGetPost } from "./redux/slices/post";
+import { fetchFollowers, fetchFollows } from "./redux/slices/user";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,9 +16,9 @@ function App() {
   }, [dispatch]);
 
   const data = useSelector(SelectIsAuth);
-  const token = window.localStorage.getItem("token");
+  const token = Boolean(window.localStorage.getItem("token"));
 
-  const isAuth = data && token;
+  const isAuth = token & data;
 
   return (
     <BrowserRouter>

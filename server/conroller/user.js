@@ -21,11 +21,12 @@ export const UserFindOne = async (req, res) => {
 
 export const followers = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.userId });
+    const user = await User.findById(req.userId).populate("posts");
+    if (!user) {
+      return res.status(404).json({ message: "No access" });
+    }
 
-    const followers = user.followers;
-
-    res.json(followers);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -33,8 +34,8 @@ export const followers = async (req, res) => {
 
 export const follows = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.userId });
-    const follows = user.follows;
+    const users = await User.findOne({ _id: req.userId });
+    const follows = users.follows;
     res.json(follows);
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -13,11 +13,6 @@ const Auth = () => {
   const navigate = useNavigate();
   const isAuth = useSelector(SelectIsAuth);
 
-
-  if (isAuth) {
-    navigate("/");
-  }
-
   return (
     <div className="auth">
       <div className="auth-c">
