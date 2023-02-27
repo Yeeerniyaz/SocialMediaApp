@@ -7,12 +7,13 @@ import "./ProfileCard.css";
 import { logout } from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
 import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
+import { NavLink } from "react-router-dom";
 
 const ProfileCard = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.data);
   const isLoading = useSelector((state) => state.auth.status);
-  const [openedModal, setOpenedModal] = React.useState(true);
+  const [openedModal, setOpenedModal] = React.useState(false);
 
   function Clicklogout() {
     window.localStorage.removeItem("token");
@@ -27,15 +28,14 @@ const ProfileCard = () => {
     <div className="ProfieCard">
       <div className="ProfileSection">
         <div className="ProfileImg">
-          {profile?.avatarUrl && <img src={profile.avatarUrl} alt="" />}
+          <img src={`http://localhost:5000/${profile.avatarUrl}`} alt="" />
         </div>
 
-        <div className="ProfileName">
+        <NavLink className="ProfileName" to={`/profile/${profile.username}`}>
           <span>{profile.fristName + " " + profile.lastName}</span>
           <span>@{profile.username}</span>
-        </div>
+        </NavLink>
       </div>
-
       <div className="followStatus">
         <hr />
         <div>
@@ -60,6 +60,8 @@ const ProfileCard = () => {
         </div>
         <hr />
       </div>
+
+      <p>{profile.status}</p>
 
       <div className="ProfileInfo">
         {profile?.location && (

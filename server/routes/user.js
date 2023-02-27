@@ -12,13 +12,13 @@ import {
 
 const router = Router();
 
-router.get("", UserFindAll);
+router.get("/find", CheckAuth, UserFindAll);
 
-router.get("/:username", UserFindOne);
+router.get("/find/:username", UserFindOne);
 
-router.get("/followers", CheckAuth, followers);
+router.get("/me/flwes", CheckAuth, followers);
 
-router.get("/follows", CheckAuth, follows);
+router.get("/me/flws", CheckAuth, follows);
 
 router.patch("/i/:id", CheckAuth, UserAdd);
 

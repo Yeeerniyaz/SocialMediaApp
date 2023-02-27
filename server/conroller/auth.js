@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
@@ -65,8 +66,6 @@ export const Login = async (req, res) => {
       expiresIn: "30d",
     });
 
-    user.password = undefined;
-
     res.json({ token, user });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -80,7 +79,6 @@ export const GetMe = async (req, res) => {
       return res.status(404).json({ message: "No access" });
     }
 
-    user.password = undefined;
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -89,15 +87,20 @@ export const GetMe = async (req, res) => {
 
 export const Update = async (req, res) => {
   try {
-    const username = await User.findOne({ username: req.params.username });
+    const username = await User.findOne({
+      username: req.body.username,
+    });
 
     if (username) {
-      return res.status(400).json({ message: "User already exists" });
+      if (username._id.toString() !== req.userId) {
+        return res.status(400).json({ message: "User already exists" });
+      }
     }
 
-    const user = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       { _id: req.userId },
       {
+        profession: req.body.profession,
         fristName: req.body.fristName,
         lastName: req.body.lastName,
         location: req.body.location,
@@ -105,13 +108,15 @@ export const Update = async (req, res) => {
         status: req.body.status,
         avatarUrl: req.body.avatarUrl,
         coverUrl: req.body.coverUrl,
-        profession: req.body.profession,
+        username: req.body.username,
       }
     );
 
+    const user = await User.findById(req.userId);
+
     user.password = undefined;
 
-    res.json(user.populate("posts"));
+    res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

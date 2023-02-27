@@ -1,26 +1,27 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./ProfileEditModal.scss";
-
-import oblojka from "../../image/oblojka.jpg";
-import ProfileImage from "../../image/ProfileImage.png";
+import axios from "../../axios";
 import { fetchUpdate } from "../../redux/slices/auth";
 
 function ProfileEditModal({ setOpenedModal, openedModal }) {
   const user = useSelector((state) => state.auth.data);
   const [status, setStatus] = useState(user?.status || "");
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(user?.username || "");
   const [fristName, SetFristName] = useState(user?.fristName || "");
   const [lastName, setLastName] = useState(user?.lastName || "");
   const [social, setSocial] = useState(user?.social || "");
   const [location, setLocation] = useState(user?.location || "");
   const [profession, setProfesion] = useState(user?.profession || "");
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatarUrl || "");
+  const avatarRef = useRef();
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setOpenedModal(false);
     dispatch(
       fetchUpdate({
         status,
@@ -30,8 +31,22 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
         social,
         location,
         profession,
+        avatarUrl,
       })
     );
+  };
+
+  const handleChangeFileOne = async (e) => {
+    try {
+      const formData = new FormData();
+      const file = e.target.files[0];
+      formData.append("file", file);
+      await axios.post("/send", formData).then(({ data }) => {
+        setAvatarUrl(data);
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -99,22 +114,50 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
-          <div>
-            <button>Загрузить аватар</button>
-            <button>Загрузить обложку</button>
-          </div>
+          {avatarUrl ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                avatarRef.current.value = "";
+                setAvatarUrl("");
+              }}
+            >
+              Удалить аватар
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                avatarRef.current.click();
+              }}
+            >
+              Загрузить аватар
+            </button>
+          )}
 
           <div className="image">
             <div>
-              <img src={oblojka} alt="" className="image1" />
-              <img src={ProfileImage} alt="" className="image2" />
+              {avatarUrl && (
+                <img
+                  src={`http://localhost:5000/${avatarUrl}`}
+                  alt=""
+                  className="image2"
+                />
+              )}
             </div>
-            <span>{fristName + " " + lastName} </span>
-            <span>@{username || user.username}</span>
+            <div className="twospan">
+              <p>{fristName + " " + lastName} </p>
+              <p>@{username || user.username}</p>
+            </div>
           </div>
 
-          <input type="file" hidden />
-          <input type="file" hidden />
+          <input
+            type="file"
+            ref={avatarRef}
+            onChange={handleChangeFileOne}
+            hidden
+          />
+
           <button onClick={onSubmit} className="button modalbtn">
             Сохранить
           </button>

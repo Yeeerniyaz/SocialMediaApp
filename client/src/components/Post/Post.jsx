@@ -61,20 +61,23 @@ const Post = ({ obj }) => {
   }
 
   async function commentCreate() {
-    setText('')
+    setText("");
     await dispatch(fetchCreateComment({ id: obj._id, text }));
-
   }
 
   return (
     <div className="post">
       <div className="author">
-        {obj.author?.avatarUrl && <img src={obj.user.avatarUrl} alt="" />}
         <div className="text">
-          <span onClick={() => navigate(`/profile/${obj.author.username}`)}>
-            {obj.author.fristName + " " + obj.author.lastName}
-          </span>
-          <span>{date.calendar()}</span>
+          {obj.author?.avatarUrl && (
+            <img src={`http://localhost:5000/${obj.author.avatarUrl}`} alt="" />
+          )}
+          <div>
+            <span onClick={() => navigate(`/profile/${obj.author.username}`)}>
+              {obj.author.fristName + " " + obj.author.lastName}
+            </span>
+            <span>{date.calendar()}</span>
+          </div>
         </div>
         {user._id !== obj.author._id ? (
           isFollow.some((e) => e === obj.author._id) ? (

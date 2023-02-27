@@ -34,13 +34,16 @@ const Comments = ({ obj, postId }) => {
   return (
     <div className="comment">
       <div className="author">
-        {obj.author?.avatarUrl && <img src={obj.user.avatarUrl} alt="" />}
-        <div className="text">
-          <span onClick={() => navigate(`/profile/${obj.author.username}`)}>
-            {obj.author.fristName + " " + obj.author.lastName}
-          </span>
-          <span>{date.calendar()}</span>
+        <div>
+          <img src={`http://localhost:5000/${obj.author.avatarUrl}`} alt="" />
+          <div className="text">
+            <span onClick={() => navigate(`/profile/${obj.author.username}`)}>
+              {obj.author.fristName + " " + obj.author.lastName}
+            </span>
+            <span>{date.calendar()}</span>
+          </div>
         </div>
+
         {user._id !== obj.author._id ? (
           isFollow.some((e) => e === obj.author._id) ? (
             <UilUserMinus onClick={buttonSubscribe} />
@@ -49,7 +52,7 @@ const Comments = ({ obj, postId }) => {
           )
         ) : (
           <UilTrash onClick={commentDelete} />
-        )} 
+        )}
       </div>
       <hr />
       <p>{obj.text}</p>

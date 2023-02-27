@@ -1,5 +1,4 @@
 import { Router } from "express";
-import fs from "fs";
 const router = Router();
 
 router.post("/", async (req, res) => {
@@ -14,7 +13,10 @@ router.post("/", async (req, res) => {
     const isValidType = fileName.split(".").pop();
     if (
       (isValidType !== "jpg") &
-      "mp4" & "jpeg" & "gif" & "png" &
+      "mp4" &
+      "jpeg" &
+      "gif" &
+      "png" &
       "svg" &
       "webp" &
       "mp4" &

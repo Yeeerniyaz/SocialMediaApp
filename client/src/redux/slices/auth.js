@@ -25,7 +25,7 @@ export const fetchRegister = createAsyncThunk(
 
 export const fetchUpdate = createAsyncThunk(
   "auth/fetchUpdate",
-  async ({ params }) => {
+  async ( params ) => {
     const { data } = await axios.patch("/auth/update", params);
     return data;
   }

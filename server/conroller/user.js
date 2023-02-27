@@ -1,3 +1,4 @@
+import { request } from "express";
 import User from "../models/User.js";
 
 export const UserFindAll = async (req, res) => {
@@ -20,23 +21,17 @@ export const UserFindOne = async (req, res) => {
 };
 
 export const followers = async (req, res) => {
+  const user = await User.findOne({ _id: req.userId }).populate("followers" , "fristName lastName avatarUrl username ");
+  res.json(user.followers);
   try {
-    const user = await User.findById(req.userId).populate("posts");
-    if (!user) {
-      return res.status(404).json({ message: "No access" });
-    }
-
-    res.json(user);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: err.message });
   }
 };
 
 export const follows = async (req, res) => {
   try {
-    const users = await User.findOne({ _id: req.userId });
-    const follows = users.follows;
-    res.json(follows);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
