@@ -26,8 +26,13 @@ const ProfileCenter = () => {
       {username !== GetMe.username && (
         <ProfileMax profile={GetUser} isLoading={isLoadingUser} />
       )}
-      <PostShare />
-      <Posts />
+      {username === GetMe.username && <PostShare />}
+      {username === GetMe.username && (
+        <Posts profile={GetMe} isLoading={isLoadingMe} />
+      )}
+      {username !== GetMe.username && (
+        <Posts profile={GetUser} isLoading={isLoadingUser} />
+      )}
     </div>
   );
 };
