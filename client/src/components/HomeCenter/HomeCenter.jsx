@@ -5,6 +5,7 @@ import PostShare from "../PostShare/PostShare.jsx";
 import Posts from "../Posts/Posts.jsx";
 
 const Center = () => {
+  
   return (
     <div className="homeCenter">
       <PostShare />

@@ -12,9 +12,11 @@ import { useParams } from "react-router-dom";
 const Profile = () => {
   const { username } = useParams();
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(fetchGetUser(username));
-  }, [dispatch]);
+  }, [dispatch, username]);
+
   return (
     <div className="container">
       <div className="Profile">

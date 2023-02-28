@@ -9,12 +9,11 @@ import { followConventor } from "../../Utils/sorter.js";
 import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
 import { NavLink, useParams } from "react-router-dom";
 
-const ProfileCard = () => {
-  const dispatch = useDispatch();
-  const profile = useSelector((state) => state.auth.data);
-  const isLoading = useSelector((state) => state.auth.status);
-  const [openedModal, setOpenedModal] = React.useState(false);
+const ProfileCard = ({ profile, isLoading }) => {
   const { username } = useParams();
+  const dispatch = useDispatch();
+  const [openedModal, setOpenedModal] = React.useState(false);
+  const me = useSelector((state) => state.auth.data);
 
   function Clicklogout() {
     window.localStorage.removeItem("token");
@@ -29,7 +28,9 @@ const ProfileCard = () => {
     <div className="ProfieCard">
       <div className="ProfileSection">
         <div className="ProfileImg">
-          <img src={`http://localhost:5000/${profile.avatarUrl}`} alt="" />
+          {profile?.avatarUrl && (
+            <img src={`http://localhost:5000/${profile.avatarUrl}`} alt="" />
+          )}
         </div>
 
         <NavLink className="ProfileName" to={`/profile/${profile.username}`}>
@@ -93,22 +94,24 @@ const ProfileCard = () => {
         )}
       </div>
 
-      <div className="controler">
-        <ProfileEditModal
-          setOpenedModal={setOpenedModal}
-          openedModal={openedModal}
-        />
-        <div
-          onClick={() => {
-            setOpenedModal(true);
-          }}
-        >
-          Редактировать
+      {me.username === username && (
+        <div className="controler">
+          <ProfileEditModal
+            setOpenedModal={setOpenedModal}
+            openedModal={openedModal}
+          />
+          <div
+            onClick={() => {
+              setOpenedModal(true);
+            }}
+          >
+            Редактировать
+          </div>
+          <button className="button log-btn" onClick={Clicklogout}>
+            Logout
+          </button>
         </div>
-        <button className="button log-btn" onClick={Clicklogout}>
-          Logout
-        </button>
-      </div>
+      )}
     </div>
   );
 };
