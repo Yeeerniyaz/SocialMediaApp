@@ -117,6 +117,7 @@ export const GetMe = async (req, res) => {
     }
 
     user.password = undefined;
+    
 
     res.json(user);
   } catch (err) {

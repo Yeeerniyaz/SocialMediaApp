@@ -2,6 +2,7 @@ import React from "react";
 
 import ProfileCard from "../ProfileCard/ProfileCard.jsx";
 import FollwersCard from "../FollwersCard/FollwersCard.jsx";
+import Skeleton from "../Skeleton/Skeleton.jsx";
 import "./left.scss";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -14,7 +15,21 @@ const PofileSide = () => {
   const isLoadingUser = useSelector((state) => state.user.status.getUser);
 
   if (isLoadingMe !== "loaded") {
-    return <div></div>;
+    return (
+      <>
+        <div
+          style={{
+            height: "700px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          <Skeleton />
+          <Skeleton />
+        </div>
+      </>
+    );
   }
 
   if (username === undefined) {
@@ -25,6 +40,8 @@ const PofileSide = () => {
       </div>
     );
   }
+
+
 
   return (
     <div className="homeLeft">

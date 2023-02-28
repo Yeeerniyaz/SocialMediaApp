@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,  } from "react-redux";
 
 import { UilMapMarker, UilBag, UilInstagram } from "@iconscout/react-unicons";
 
@@ -8,12 +8,13 @@ import { logout } from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
 import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
 import { NavLink, useParams } from "react-router-dom";
+import Skeleton from "../Skeleton/Skeleton";
 
 const ProfileCard = ({ profile, isLoading }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const [openedModal, setOpenedModal] = React.useState(false);
-  const me = useSelector((state) => state.auth.data);
+  // const me = useSelector((state) => state.auth.data);
 
   function Clicklogout() {
     window.localStorage.removeItem("token");
@@ -21,7 +22,11 @@ const ProfileCard = ({ profile, isLoading }) => {
   }
 
   if (isLoading !== "loaded") {
-    return <div></div>;
+    return (
+      <div style={{ height: "300px" }}>
+        <Skeleton />
+      </div>
+    );
   }
 
   return (
@@ -94,7 +99,7 @@ const ProfileCard = ({ profile, isLoading }) => {
         )}
       </div>
 
-      {me.username === username && (
+      {username === undefined && (
         <div className="controler">
           <ProfileEditModal
             setOpenedModal={setOpenedModal}

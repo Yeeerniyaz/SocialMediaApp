@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./Posts.scss";
 import Post from "../Post/Post.jsx";
+import Skeleton from '../Skeleton/Skeleton';
 
 const Posts = ({ post, isLoading }) => {
   const PostData = useSelector((state) => state.post.data);
@@ -10,7 +11,11 @@ const Posts = ({ post, isLoading }) => {
   const isloadingA = useSelector((state) => state.auth.status);
 
   if (isloadingP !== "loaded" || isloadingA !== "loaded") {
-    return <div>Loading</div>;
+    return (
+      <div style={{ height: "1000px" }}>
+        <Skeleton />
+      </div>
+    );
   }
 
   if (post) {
@@ -23,7 +28,11 @@ const Posts = ({ post, isLoading }) => {
         </div>
       );
     } else {
-      return <div>Loading</div>;
+      return (
+        <div style={{ height: "300px" }}>
+          <Skeleton />
+        </div>
+      );
     }
   }
 

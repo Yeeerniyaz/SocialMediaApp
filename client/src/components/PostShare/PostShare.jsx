@@ -4,7 +4,7 @@ import { UilPaperclip, UilMessage, UilX } from "@iconscout/react-unicons";
 import axios from "../../axios";
 import { fileSorter } from "../../Utils/sorter";
 import "./style.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchCreatePost } from "../../redux/slices/post";
 import { addPost } from "../../redux/slices/auth";
 
@@ -29,11 +29,14 @@ const PostShare = () => {
 
   const onSubmit = async () => {
     const data = await dispatch(fetchCreatePost({ file: fileUrl, title }));
+    console.info(data);
     dispatch(addPost(data.payload));
     setTitle("");
     setFileUrl("");
     fileRef.current.value = null;
   };
+
+  console.log(useSelector((state) => state.auth.data));
 
   return (
     <div className="postShare">

@@ -65,8 +65,6 @@ const Post = ({ obj }) => {
     await dispatch(fetchCreateComment({ id: obj._id, text }));
   }
 
-  console.log(obj)
-
   return (
     <div className="post">
       <div className="author">

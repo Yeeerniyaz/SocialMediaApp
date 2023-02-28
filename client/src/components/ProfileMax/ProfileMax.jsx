@@ -2,17 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./ProfileMax.scss";
-import axios from "../../axios";
 import { fetchUpdate } from "../../redux/slices/auth";
+import axios from "../../axios";
+import Skeleton from "../Skeleton/Skeleton";
 
 const ProfileMax = ({ profile, isLoading }) => {
   const me = useSelector((state) => state.auth.data);
   const coverRef = React.useRef();
   const dispatch = useDispatch();
-
-  if (isLoading !== "loaded") {
-    return <div></div>;
-  }
 
   const handleChangeFile = async (e) => {
     try {
@@ -26,6 +23,14 @@ const ProfileMax = ({ profile, isLoading }) => {
       console.error(err);
     }
   };
+
+  if (isLoading !== "loaded") {
+    return (
+      <div style={{ height: "300px" }}>
+        <Skeleton />
+      </div>
+    );
+  }
 
   return (
     <div className="ProfileMax">
@@ -63,6 +68,7 @@ const ProfileMax = ({ profile, isLoading }) => {
           )}
         </div>
       </div>
+
       <input type="file" onChange={handleChangeFile} ref={coverRef} hidden />
     </div>
   );

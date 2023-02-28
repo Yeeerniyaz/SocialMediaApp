@@ -68,10 +68,12 @@ const AuthSlices = createSlice({
       state.data = null;
     },
     addPost: (state, params) => {
-      state.data.posts.unshift(params);
+      state.data.posts.unshift(params.payload);
     },
     removePost: (state, params) => {
-      state.data.posts = state.data.posts.filter((post) => post._id === params);
+      state.data.posts = state.data.posts.filter(
+        (post) => post._id !== params.payload
+      );
     },
   },
   extraReducers: (bulider) => {

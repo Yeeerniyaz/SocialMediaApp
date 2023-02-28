@@ -3,14 +3,19 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import "./style.scss";
+import Skeleton from '../Skeleton/Skeleton';
 
 const FollwersCard = () => {
   const followers = useSelector((state) => state.user.followers);
   const isloading = useSelector((state) => state.user.status.followers);
   const navigate = useNavigate();
 
-  if (isloading === "loading") {
-    return <div>loading</div>;
+  if (isloading !== "loaded") {
+        return (
+          <div style={{ height: "300px" }}>
+            <Skeleton />
+          </div>
+        );;
   }
 
   if (followers.length <= 0) {

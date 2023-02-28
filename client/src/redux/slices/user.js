@@ -73,10 +73,10 @@ const UserSlices = createSlice({
       //   state.status = "error";
       //   state.data = state.data || [];
       // }) // ! GET USER
-      // .addCase(fetchGetUser.pending, (state) => {
-      //   state.data = [];
-      //   state.status = "loading";
-      // })
+      .addCase(fetchGetUser.pending, (state) => {
+        state.data = [];
+        state.status.getUser = "loading";
+      })
       .addCase(fetchGetUser.fulfilled, (state, action) => {
         state.status.getUser = "loaded";
         state.getUser = action.payload;

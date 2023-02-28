@@ -1,11 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import "./ProfileCenter.scss";
 import Posts from "../Posts/Posts";
 import PostShare from "../PostShare/PostShare";
 import ProfileMax from "../ProfileMax/ProfileMax.jsx";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import Skeleton from '../Skeleton/Skeleton';
 
 const ProfileCenter = () => {
   const { username } = useParams();
@@ -16,7 +17,19 @@ const ProfileCenter = () => {
   const post = useSelector((state) => state.user.getUser.post);
 
   if (isLoadingMe !== "loaded") {
-    return <div></div>;
+    return (
+      <div
+        style={{
+          height: "700px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+      >
+        <Skeleton />
+        <Skeleton />
+      </div>
+    );
   }
 
   return (
