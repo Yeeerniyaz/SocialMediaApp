@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import "./Posts.scss";
 import Post from "../Post/Post.jsx";
 
-const Posts = ({ profile, isLoading }) => {
+const Posts = ({ post, isLoading }) => {
   const PostData = useSelector((state) => state.post.data);
   const isloadingP = useSelector((state) => state.post.status);
   const isloadingA = useSelector((state) => state.auth.status);
@@ -13,14 +13,18 @@ const Posts = ({ profile, isLoading }) => {
     return <div>Loading</div>;
   }
 
-  if (profile.posts) {
-    return (
-      <div className="posts">
-        {profile.posts.map((obj) => {
-          return <Post obj={obj} key={obj._id} />;
-        })}
-      </div>
-    );
+  if (post) {
+    if (isLoading === "loaded") {
+      return (
+        <div className="posts">
+          {post.map((obj) => {
+            return <Post obj={obj} key={obj._id} />;
+          })}
+        </div>
+      );
+    } else {
+      return <div>Loading</div>;
+    }
   }
 
   return (

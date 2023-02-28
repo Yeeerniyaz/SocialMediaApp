@@ -38,7 +38,11 @@ export const Create = async (req, res) => {
     );
 
     res.json(
-      await post.populate("author", " avatarUrl username fristName lastName")
+      await post.populate({
+        path: "author",
+        model: "User",
+        select: "avatarUrl username fristName lastName",
+      })
     );
   } catch (err) {
     res.status(500).json({ message: err.message });

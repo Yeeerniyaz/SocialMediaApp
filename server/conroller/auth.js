@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
-import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 
 export const Register = async (req, res) => {
   try {
@@ -48,14 +48,23 @@ export const Login = async (req, res) => {
   try {
     const username = req.body.email.split("@")[0];
     const user = await User.findOne({ username: username })
-      .populate("posts")
       .populate({
-        path: "posts.comments.author",
-        select: " avatarUrl username fristName lastName",
+        path: "posts",
+        model: "Post",
+        populate: {
+          path: "author",
+          model: "User",
+          select: " avatarUrl username fristName lastName",
+        },
       })
       .populate({
-        path: "posts.author",
-        select: " avatarUrl username fristName lastName",
+        path: "posts",
+        model: "Post",
+        populate: {
+          path: "comments.author",
+          model: "User",
+          select: " avatarUrl username fristName lastName",
+        },
       });
     if (!user) {
       return res
@@ -84,11 +93,30 @@ export const Login = async (req, res) => {
 export const GetMe = async (req, res) => {
   try {
     const user = await User.findById(req.userId)
-      .populate({ path: "posts" })
+      .populate({
+        path: "posts",
+        model: "Post",
+        populate: {
+          path: "author",
+          model: "User",
+          select: " avatarUrl username fristName lastName",
+        },
+      })
+      .populate({
+        path: "posts",
+        model: "Post",
+        populate: {
+          path: "comments.author",
+          model: "User",
+          select: " avatarUrl username fristName lastName",
+        },
+      });
 
     if (!user) {
       return res.status(404).json({ message: "No access" });
     }
+
+    user.password = undefined;
 
     res.json(user);
   } catch (err) {
@@ -123,8 +151,7 @@ export const Update = async (req, res) => {
       }
     );
 
-    const user = await User.findById(req.userId).populate({ path: "posts" });
-
+    const user = await User.findById(req.userId).populate("posts");
 
     user.password = undefined;
 

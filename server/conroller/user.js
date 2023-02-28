@@ -1,3 +1,4 @@
+import Post from "../models/Post.js";
 import User from "../models/User.js";
 
 export const UserFindAll = async (req, res) => {
@@ -11,18 +12,19 @@ export const UserFindAll = async (req, res) => {
 
 export const UserFindOne = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username })
-      .populate("posts")
+    const user = await User.findOne({ username: req.params.username }).populate(
+      "posts"
+    );
+
+    const post = await Post.find({ author: user._id })
+      .populate("author", " avatarUrl username fristName lastName")
       .populate({
-        path: "posts.author",
-        select: " avatarUrl username fristName lastName",
-      })
-      .populate({
-        path: "posts.comments.author",
+        path: "comments.author",
         select: " avatarUrl username fristName lastName",
       });
+
     user.password = null;
-    res.json(user);
+    res.json({ user, post });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -31,7 +33,7 @@ export const UserFindOne = async (req, res) => {
 export const followers = async (req, res) => {
   const user = await User.findOne({ _id: req.userId }).populate(
     "followers",
-    "fristName lastName avatarUrl username "
+    "fristName lastName avatarUrl username"
   );
   res.json(user.followers);
   try {

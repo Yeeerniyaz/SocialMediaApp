@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const PofileSide = () => {
   const { username } = useParams();
   const GetMe = useSelector((state) => state.auth.data);
-  const GetUser = useSelector((state) => state.user.getUser);
+  const GetUser = useSelector((state) => state.user.getUser.user);
   const isLoadingMe = useSelector((state) => state.auth.status);
   const isLoadingUser = useSelector((state) => state.user.status.getUser);
 

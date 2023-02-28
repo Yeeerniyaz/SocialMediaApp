@@ -10,9 +10,10 @@ import { useParams } from "react-router-dom";
 const ProfileCenter = () => {
   const { username } = useParams();
   const GetMe = useSelector((state) => state.auth.data);
-  const GetUser = useSelector((state) => state.user.getUser);
+  const GetUser = useSelector((state) => state.user.getUser.user);
   const isLoadingMe = useSelector((state) => state.auth.status);
   const isLoadingUser = useSelector((state) => state.user.status.getUser);
+  const post = useSelector((state) => state.user.getUser.post);
 
   if (isLoadingMe !== "loaded") {
     return <div></div>;
@@ -28,10 +29,10 @@ const ProfileCenter = () => {
       )}
       {username === GetMe.username && <PostShare />}
       {username === GetMe.username && (
-        <Posts profile={GetMe} isLoading={isLoadingMe} />
+        <Posts post={GetMe.posts} isLoading={isLoadingUser} />
       )}
       {username !== GetMe.username && (
-        <Posts profile={GetUser} isLoading={isLoadingUser} />
+        <Posts post={post} isLoading={isLoadingUser} />
       )}
     </div>
   );

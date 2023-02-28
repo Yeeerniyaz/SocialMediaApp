@@ -28,7 +28,7 @@ const Post = ({ obj }) => {
   const date = new moment(obj.createdAt);
   const user = useSelector((state) => state.auth.data);
   const isLikes = Boolean(obj.likes.find((arr) => arr === user._id));
-  const [likeCount, setIsCount] = React.useState(obj.likes.length);
+  const [likeCount, setIsCount] = React.useState(obj?.likes.length);
   const [isLiked, setIsLiked] = React.useState(isLikes);
   const [text, setText] = React.useState("");
   const [showAll, setShowAll] = React.useState(false);
@@ -64,6 +64,8 @@ const Post = ({ obj }) => {
     setText("");
     await dispatch(fetchCreateComment({ id: obj._id, text }));
   }
+
+  console.log(obj)
 
   return (
     <div className="post">
