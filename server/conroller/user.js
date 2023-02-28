@@ -12,7 +12,16 @@ export const UserFindAll = async (req, res) => {
 
 export const UserFindOne = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username })
+      .populate("posts")
+      .populate({
+        path: "posts.author",
+        select: " avatarUrl username fristName lastName",
+      })
+      .populate({
+        path: "posts.comments.author",
+        select: " avatarUrl username fristName lastName",
+      });
     user.password = null;
     res.json(user);
   } catch (err) {
@@ -21,7 +30,10 @@ export const UserFindOne = async (req, res) => {
 };
 
 export const followers = async (req, res) => {
-  const user = await User.findOne({ _id: req.userId }).populate("followers" , "fristName lastName avatarUrl username ");
+  const user = await User.findOne({ _id: req.userId }).populate(
+    "followers",
+    "fristName lastName avatarUrl username "
+  );
   res.json(user.followers);
   try {
   } catch (err) {

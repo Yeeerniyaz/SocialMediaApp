@@ -7,13 +7,14 @@ import "./ProfileCard.css";
 import { logout } from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
 import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const ProfileCard = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.auth.data);
   const isLoading = useSelector((state) => state.auth.status);
   const [openedModal, setOpenedModal] = React.useState(false);
+  const { username } = useParams();
 
   function Clicklogout() {
     window.localStorage.removeItem("token");

@@ -1,0 +1,73 @@
+.ProfileMax {
+  width: 100%;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  padding: 1rem;
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+}
+
+.ProfileMax > .img-c {
+  overflow: clip;
+  position: relative;
+}
+
+.ProfileMax > .img-c > div {
+  overflow: hidden;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.ProfileMax > .img-c > img {
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+  object-position: bottom;
+  filter: blur(0px);
+  border-radius: 10px;
+}
+
+.ProfileMax > .profileInfo {
+  height: 5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ProfileMax > .profileInfo > img {
+  margin-top: -4.5rem;
+  margin-left: 2rem;
+  width: 9rem;
+  height: 9rem;
+  object-fit: cover;
+  position: absolute;
+  border-radius: 50%;
+  border: 5px solid rgb(255, 255, 255);
+}
+
+.profileInfo > .proofileName {
+  margin-left: 12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileInfo > div > span:nth-of-type(1) {
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+
+.profileInfo > div > span:nth-of-type(2) {
+  font-weight: bold;
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.profileInfo > div .followStatus {
+  margin-right: 2rem;
+  width: 100%;
+}

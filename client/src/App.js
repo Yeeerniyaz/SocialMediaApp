@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
+import Profile from "./pages/Profile/Profile";
 import { fetchAuth, SelectIsAuth } from "./redux/slices/auth.js";
 import { fetchGetPost } from "./redux/slices/post";
 import { fetchFollowers } from "./redux/slices/user";
@@ -24,11 +25,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {isAuth ? (
-          <Route path="/" element={<Home />} />
-        ) : (
-          <Route path="/" element={<Auth />} />
-        )}
+        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Auth />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

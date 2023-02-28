@@ -17,7 +17,7 @@ export const fetchFollows = createAsyncThunk("user/fetchFollows", async () => {
 export const fetchGetUser = createAsyncThunk(
   "user/fetchGetUser",
   async (params) => {
-    const { data } = await axios.get(`/user/${params}`);
+    const { data } = await axios.get(`/user/find/${params}`);
     return data;
   }
 );
@@ -77,10 +77,10 @@ const UserSlices = createSlice({
       //   state.data = [];
       //   state.status = "loading";
       // })
-      // .addCase(fetchGetUser.fulfilled, (state, action) => {
-      //   state.status = "loaded";
-      //   state.data = action.payload;
-      // })
+      .addCase(fetchGetUser.fulfilled, (state, action) => {
+        state.status.getUser = "loaded";
+        state.getUser = action.payload;
+      })
       // .addCase(fetchGetUser.rejected, (state) => {
       //   state.status = "error";
       //   state.data = state.data || [];
