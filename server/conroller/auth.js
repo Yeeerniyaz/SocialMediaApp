@@ -47,7 +47,16 @@ export const Register = async (req, res) => {
 export const Login = async (req, res) => {
   try {
     const username = req.body.email.split("@")[0];
-    const user = await User.findOne({ username: username }).populate("posts");
+    const user = await User.findOne({ username: username })
+      .populate("posts")
+      .populate({
+        path: "posts.comments.author",
+        select: " avatarUrl username fristName lastName",
+      })
+      .populate({
+        path: "posts.author",
+        select: " avatarUrl username fristName lastName",
+      });
     if (!user) {
       return res
         .status(403)
@@ -74,7 +83,9 @@ export const Login = async (req, res) => {
 
 export const GetMe = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).populate("posts");
+    const user = await User.findById(req.userId)
+      .populate({ path: "posts" })
+
     if (!user) {
       return res.status(404).json({ message: "No access" });
     }
@@ -112,7 +123,8 @@ export const Update = async (req, res) => {
       }
     );
 
-    const user = await User.findById(req.userId);
+    const user = await User.findById(req.userId).populate({ path: "posts" });
+
 
     user.password = undefined;
 
