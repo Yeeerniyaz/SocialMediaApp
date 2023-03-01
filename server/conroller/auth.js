@@ -1,8 +1,10 @@
+
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js";
 import Post from "../models/Post.js";
+
 
 export const Register = async (req, res) => {
   try {
