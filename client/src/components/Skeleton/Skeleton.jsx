@@ -2,7 +2,7 @@ import "./style.scss";
 
 const Skeleton = () => {
   return (
-    <div class="Skeleton">
+    <div className="Skeleton">
     </div>
   );
 };

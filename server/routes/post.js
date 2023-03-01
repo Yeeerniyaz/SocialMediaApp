@@ -5,6 +5,7 @@ import {
   Create,
   Delete,
   Like,
+  Tags,
   CreateComment,
   DeleteComment,
 } from "../conroller/post.js";
@@ -19,6 +20,8 @@ router.post("/", CheckAuth, Create);
 router.delete("/:id", CheckAuth, Delete);
 
 router.get("/like/:id", CheckAuth, Like);
+
+router.get("/tags", Tags);
 
 router.post("/comment/:id", CheckAuth, CreateComment);
 

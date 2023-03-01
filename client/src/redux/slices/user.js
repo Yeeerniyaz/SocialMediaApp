@@ -46,7 +46,16 @@ const initialState = {
 const UserSlices = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    followersIncMin: (state, params) => {
+      state.getUser.user.followers = state.getUser.user.followers.filter(
+        (e) => e !== params.payload
+      );
+    },
+    followersIncMax: (state, params) => {
+      state.getUser.user.followers.unshift(params.payload);
+    },
+  },
   extraReducers: (bulider) => {
     bulider // ! FOLLOWERS
       .addCase(fetchFollowers.pending, (state) => {
@@ -80,24 +89,26 @@ const UserSlices = createSlice({
       .addCase(fetchGetUser.fulfilled, (state, action) => {
         state.status.getUser = "loaded";
         state.getUser = action.payload;
-      })
-      // .addCase(fetchGetUser.rejected, (state) => {
-      //   state.status = "error";
-      //   state.data = state.data || [];
-      // }) // ! GET POPULARITY
-      // .addCase(fetchGetPopular.pending, (state) => {
-      //   state.data = [];
-      //   state.status = "loading";
-      // })
-      // .addCase(fetchGetPopular.fulfilled, (state, action) => {
-      //   state.status = "loaded";
-      //   state.data = action.payload;
-      // })
-      // .addCase(fetchGetPopular.rejected, (state) => {
-      //   state.status = "error";
-      //   state.data = state.data || [];
-      // });
+      });
+    // .addCase(fetchGetUser.rejected, (state) => {
+    //   state.status = "error";
+    //   state.data = state.data || [];
+    // }) // ! GET POPULARITY
+    // .addCase(fetchGetPopular.pending, (state) => {
+    //   state.data = [];
+    //   state.status = "loading";
+    // })
+    // .addCase(fetchGetPopular.fulfilled, (state, action) => {
+    //   state.status = "loaded";
+    //   state.data = action.payload;
+    // })
+    // .addCase(fetchGetPopular.rejected, (state) => {
+    //   state.status = "error";
+    //   state.data = state.data || [];
+    // });
   },
 });
 
 export const UserReducer = UserSlices.reducer;
+export const { followersIncMin } = UserSlices.actions;
+export const { followersIncMax } = UserSlices.actions;

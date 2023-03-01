@@ -105,3 +105,10 @@
 .log-btn {
   padding: 5px 20px;
 }
+
+.buttonSubscribe {
+  cursor: pointer;
+  font-size: small;
+  align-self: center;
+  opacity: 0.7;
+}

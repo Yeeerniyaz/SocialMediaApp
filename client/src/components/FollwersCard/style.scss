@@ -19,6 +19,7 @@
     padding: 10px;
     border-radius: 1rem;
     transition: all 0.5s;
+    font-size: small;
 
     &:hover {
       background-color: #00000090;
@@ -51,4 +52,9 @@
     height: 3rem;
     border-radius: 50%;
   }
+}
+
+.button-m {
+  font-size: x-small;
+  padding: 9px;
 }

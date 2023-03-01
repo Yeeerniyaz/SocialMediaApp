@@ -125,3 +125,19 @@ export const DeleteComment = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const Tags = async () => {
+  try {
+    Model.aggregate(
+      [
+        { $group: { _id: "$Post.tags", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+      ],
+      (err, result) => {
+        console.log(result);
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

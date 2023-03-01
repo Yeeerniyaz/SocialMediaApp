@@ -1,20 +1,26 @@
 import React from "react";
-import { useDispatch,  } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { UilMapMarker, UilBag, UilInstagram } from "@iconscout/react-unicons";
 
 import "./ProfileCard.css";
-import { logout } from "../../redux/slices/auth";
+import {
+  fetchRemoveFollow,
+  fetchAddFollow,
+  logout,
+} from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
 import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
 import { NavLink, useParams } from "react-router-dom";
 import Skeleton from "../Skeleton/Skeleton";
+import { followersIncMax, followersIncMin } from "../../redux/slices/user";
 
 const ProfileCard = ({ profile, isLoading }) => {
   const { username } = useParams();
   const dispatch = useDispatch();
   const [openedModal, setOpenedModal] = React.useState(false);
-  // const me = useSelector((state) => state.auth.data);
+  const me = useSelector((state) => state.auth.data);
+  const isFollow = Boolean(me.follows.find((e) => e === profile?._id));
 
   function Clicklogout() {
     window.localStorage.removeItem("token");
@@ -29,6 +35,16 @@ const ProfileCard = ({ profile, isLoading }) => {
     );
   }
 
+  function buttonSubscribe() {
+    if (isFollow) {
+      dispatch(fetchRemoveFollow(profile._id));
+      dispatch(followersIncMin(me._id));
+    } else {
+      dispatch(fetchAddFollow(profile._id));
+      dispatch(followersIncMax(me._id));
+    }
+  }
+
   return (
     <div className="ProfieCard">
       <div className="ProfileSection">
@@ -37,12 +53,18 @@ const ProfileCard = ({ profile, isLoading }) => {
             <img src={`http://localhost:5000/${profile.avatarUrl}`} alt="" />
           )}
         </div>
-
         <NavLink className="ProfileName" to={`/profile/${profile.username}`}>
           <span>{profile.fristName + " " + profile.lastName}</span>
           <span>@{profile.username}</span>
         </NavLink>
       </div>
+
+      {profile._id !== me._id && (
+        <div className="buttonSubscribe" onClick={buttonSubscribe}>
+          {isFollow ? <div>отписаться</div> : <div>подписатся</div>}
+        </div>
+      )}
+
       <div className="followStatus">
         <hr />
         <div>
