@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
+import Tags from "./pages/Tags/Tags";
 import Profile from "./pages/Profile/Profile";
 import { fetchAuth } from "./redux/slices/auth.js";
 import { fetchGetPost, fetchPopularTags } from "./redux/slices/post";
@@ -22,6 +23,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/tags/:tags" element={<Tags />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/profile/:username" element={<Profile />} />
       </Routes>

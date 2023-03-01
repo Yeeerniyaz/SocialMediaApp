@@ -151,3 +151,20 @@ export const Tags = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const GetTags = async (req, res) => {
+  try {
+    const tags = req.params.tags;
+    const tag = tags.toString();
+    const post = await Post.find({tags: tag})
+      .populate("author", " avatarUrl username fristName lastName")
+      .populate({
+        path: "comments.author",
+        select: " avatarUrl username fristName lastName",
+      })
+    console.log(post);
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

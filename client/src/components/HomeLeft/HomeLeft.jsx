@@ -1,11 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+import "./left.scss";
 import ProfileCard from "../ProfileCard/ProfileCard.jsx";
 import FollwersCard from "../FollwersCard/FollwersCard.jsx";
 import Skeleton from "../Skeleton/Skeleton.jsx";
-import "./left.scss";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import Search from "../Search/Search.jsx";
 
 const PofileSide = () => {
   const { username } = useParams();
@@ -35,16 +36,16 @@ const PofileSide = () => {
   if (username === undefined) {
     return (
       <div className="homeLeft">
+        <Search/>
         <ProfileCard profile={GetMe} isLoading={isLoadingMe} />
         <FollwersCard />
       </div>
     );
   }
 
-
-
   return (
     <div className="homeLeft">
+      <Search />
       {username === GetMe.username && (
         <ProfileCard profile={GetMe} isLoading={isLoadingMe} />
       )}

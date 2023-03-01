@@ -8,6 +8,7 @@ import {
   Tags,
   CreateComment,
   DeleteComment,
+  GetTags,
 } from "../conroller/post.js";
 import CheckAuth from "../middleware/CheckAuth.js";
 
@@ -22,6 +23,8 @@ router.delete("/:id", CheckAuth, Delete);
 router.get("/like/:id", CheckAuth, Like);
 
 router.get("/tags", Tags);
+
+router.get("/:tags", GetTags);
 
 router.post("/comment/:id", CheckAuth, CreateComment);
 

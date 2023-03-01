@@ -1,12 +1,12 @@
 import React from "react";
 import { UilPaperclip, UilMessage, UilX } from "@iconscout/react-unicons";
 
-import axios from "../../axios";
-import { fileSorter } from "../../Utils/sorter";
 import "./style.scss";
+import { fileSorter } from "../../Utils/sorter";
 import { useDispatch } from "react-redux";
 import { fetchCreatePost } from "../../redux/slices/post";
 import { addPost } from "../../redux/slices/auth";
+import axios from "../../axios";
 
 const PostShare = () => {
   const dispatch = useDispatch();
