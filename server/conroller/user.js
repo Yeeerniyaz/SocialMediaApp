@@ -92,3 +92,18 @@ export const UserDelete = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const UsersFind = async (req, res) => {
+  try {
+    const users = await User.find({
+      $or: [
+        { username: { $regex: req.params.params, $options: "i" } },
+        { fristName: { $regex: req.params.params, $options: "i" } },
+        { lastName: { $regex: req.params.params, $options: "i" } },
+      ],
+    }).limit(10);
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

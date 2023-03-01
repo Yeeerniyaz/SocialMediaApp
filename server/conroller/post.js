@@ -20,10 +20,11 @@ export const Create = async (req, res) => {
   try {
     const tags = req.body.title.split("#");
     const title = tags.shift();
+    const tag = tags.map((str) => str.trim().toLowerCase());
 
     const doc = new Post({
       title: title,
-      tags: tags,
+      tags: tag,
       file: req.body.file,
       author: req.userId,
     });
@@ -154,15 +155,14 @@ export const Tags = async (req, res) => {
 
 export const GetTags = async (req, res) => {
   try {
-    const tags = req.params.tags;
-    const tag = tags.toString();
-    const post = await Post.find({tags: tag})
+    const post = await Post.find({ tags: req.params.tags })
       .populate("author", " avatarUrl username fristName lastName")
       .populate({
         path: "comments.author",
         select: " avatarUrl username fristName lastName",
       })
-    console.log(post);
+      .sort({ likes: -1 })
+      .limit(10);
     res.json(post);
   } catch (err) {
     res.status(500).json({ message: err.message });

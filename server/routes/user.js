@@ -8,6 +8,7 @@ import {
   follows,
   UserAdd,
   UserDelete,
+  UsersFind,
 } from "../conroller/user.js";
 
 const router = Router();
@@ -15,6 +16,8 @@ const router = Router();
 router.get("/find", CheckAuth, UserFindAll);
 
 router.get("/find/:username", UserFindOne);
+
+router.get("/users/:params", UsersFind);
 
 router.get("/me/flwes", CheckAuth, followers);
 

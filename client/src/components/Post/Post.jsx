@@ -98,10 +98,10 @@ const Post = ({ obj }) => {
           <span
             key={t}
             onClick={() => {
-              navigate(`/tag/${t}`);
+              navigate(`/tags/${t}`);
             }}
           >
-            #{t}
+            #{t + " "}
           </span>
         ))}
       </div>

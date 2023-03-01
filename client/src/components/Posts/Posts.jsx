@@ -12,14 +12,18 @@ const Posts = ({ post, isLoading }) => {
   const isloadingP = useSelector((state) => state.post.status);
   const isloadingA = useSelector((state) => state.auth.status);
 
-  const [isLoadingTags, setIsloadingTags] = React.useState(true);
-  const [data, setData] = React.useState(undefined);
+  const [isLoadingTags, setIsloadingTags] = React.useState(false);
+  const [dataTags, setDataTags] = React.useState(undefined);
   const { tags } = useParams();
 
   React.useEffect(() => {
-    axios.get(`/post/${tags}`).then((data) => {
-      console.log(data);
-    });
+    setIsloadingTags(false);
+    if (tags) {
+      axios.get(`/post/${tags}`).then((tags) => {
+        setDataTags(tags.data);
+        setIsloadingTags(true);
+      });
+    }
   }, [tags]);
 
   if (isloadingP !== "loaded" || isloadingA !== "loaded") {
@@ -28,6 +32,26 @@ const Posts = ({ post, isLoading }) => {
         <Skeleton />
       </div>
     );
+  }
+
+  console.log(dataTags);
+
+  if (tags) {
+    if (isLoadingTags) {
+      return (
+        <div className="posts">
+          {dataTags.map((obj) => {
+            return <Post obj={obj} key={obj._id} />;
+          })}
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ height: "620px" }}>
+          <Skeleton />
+        </div>
+      );
+    }
   }
 
   if (post) {
