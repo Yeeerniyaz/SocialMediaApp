@@ -6,7 +6,7 @@ import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import { fetchAuth } from "./redux/slices/auth.js";
-import { fetchGetPost } from "./redux/slices/post";
+import { fetchGetPost, fetchPopularTags } from "./redux/slices/post";
 import { fetchFollowers } from "./redux/slices/user";
 
 function App() {
@@ -15,9 +15,8 @@ function App() {
     dispatch(fetchAuth());
     dispatch(fetchGetPost());
     dispatch(fetchFollowers());
+    dispatch(fetchPopularTags());
   }, [dispatch]);
-
-
 
   return (
     <BrowserRouter>

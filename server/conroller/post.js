@@ -126,15 +126,25 @@ export const DeleteComment = async (req, res) => {
   }
 };
 
-export const Tags = async () => {
+export const Tags = async (req, res) => {
   try {
-    Model.aggregate(
+    Post.aggregate(
       [
-        { $group: { _id: "$Post.tags", count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
+        {
+          $unwind: "$tags",
+        },
+        {
+          $group: {
+            _id: "$tags",
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { count: -1 },
+        },
       ],
       (err, result) => {
-        console.log(result);
+        res.json(result);
       }
     );
   } catch (err) {

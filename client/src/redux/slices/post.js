@@ -38,8 +38,18 @@ export const fetchdeleteComment = createAsyncThunk(
   }
 );
 
+export const fetchPopularTags = createAsyncThunk(
+  "post/fetchPopularTags",
+  async () => {
+    const { data } = await axios.get("/post/tags");
+    return data;
+  }
+);
+
 const initialState = {
   data: undefined,
+  tags: undefined,
+  tagStatus: "loading",
   status: "loading",
 };
 
@@ -76,6 +86,16 @@ const PostSlices = createSlice({
         ].comments = state.data[
           state.data.findIndex(({ _id }) => _id === action.meta.arg.postId)
         ].comments.filter(({ _id }) => _id !== action.meta.arg.id);
+      })
+      .addCase(fetchPopularTags.pending, (state) => {
+        state.tagStatus = "loading";
+      })
+      .addCase(fetchPopularTags.fulfilled, (state, action) => {
+        state.tagStatus = "loaded";
+        state.tags = action.payload;
+      })
+      .addCase(fetchPopularTags.rejected, (state) => {
+        state.tagStatus = "error";
       });
   },
 });
