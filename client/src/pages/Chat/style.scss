@@ -1,0 +1,17 @@
+.Chat {
+  height: 96vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 20rem auto;
+  gap: 1rem;
+  margin: 2vh 0;
+  border-radius: 1rem;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  padding: 10px;
+  overflow: scroll;
+}
+
+.Chat > div:nth-of-type(1) {
+  border-right: var(--container-border);
+}

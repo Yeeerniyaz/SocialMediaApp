@@ -9,10 +9,28 @@ export const GetAll = async (req, res) => {
         path: "comments.author",
         select: " avatarUrl username fristName lastName",
       })
-      .sort({ createdAt: -1 });
+      .sort({ likes: -1 });
+
     res.json(posts);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+export const FollowsPosts = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.userId });
+    const FollowsPosts = await Post.find({ author: { $in: user.follows } })
+      .populate("author", " avatarUrl username fristName lastName")
+      .populate({
+        path: "comments.author",
+        select: " avatarUrl username fristName lastName",
+      })
+      .sort({ createdAt: -1 });
+
+    res.json(FollowsPosts);
+  } catch (err) {
+    res.json(500).json({ message: "" });
   }
 };
 

@@ -5,3 +5,17 @@
   max-height: 100vh;
   overflow: auto;
 }
+
+.toggleFollower {
+  display: flex;
+  gap: 1rem;
+
+  .toggleFollower__item {
+    font-size: smaller;
+  }
+
+  .isActive {
+    border-bottom: 2px solid var(--text-color);
+    padding-bottom: 5px;
+  }
+}

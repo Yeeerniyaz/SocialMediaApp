@@ -9,6 +9,7 @@ import Profile from "./pages/Profile/Profile";
 import { fetchAuth } from "./redux/slices/auth.js";
 import { fetchGetPost, fetchPopularTags } from "./redux/slices/post";
 import { fetchFollowers } from "./redux/slices/user";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   const dispatch = useDispatch();

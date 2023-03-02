@@ -8,7 +8,6 @@ import AuthRoutes from "./routes/auth.js";
 import UserRoutes from "./routes/user.js";
 import PostRoutes from "./routes/post.js";
 import FileRoutes from "./routes/file.js";
-import ChatRoutes from "./routes/chat.js";
 
 dotenv.config();
 const app = express();
@@ -22,14 +21,16 @@ mongoose
   .then(() => console.log("DB connection established"))
   .catch((err) => console.log(err));
 
-/* Routing the different routes to the different files. */
 app.use("/files", express.static("files"));
 app.use("/send", FileRoutes);
 app.use("/auth", AuthRoutes);
 app.use("/user", UserRoutes);
 app.use("/post", PostRoutes);
-app.use("/chat", ChatRoutes);
 
 app.listen(process.env.PORT, (err) => {
-  err ? console.error(err) : console.log("Local port is " + process.env.PORT);
+  if (err) {
+    console.error(err);
+  } else {
+    console.log("Local port is " + process.env.PORT);
+  }
 });

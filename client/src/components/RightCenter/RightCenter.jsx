@@ -23,7 +23,11 @@ const RightSide = () => {
           }}
         />
         <UilSetting />
-        <UilComment />
+        <UilComment
+          onClick={() => {
+            navigate("/chat");
+          }}
+        />
         <UilSignOutAlt
           onClick={() => {
             navigate("/auth");

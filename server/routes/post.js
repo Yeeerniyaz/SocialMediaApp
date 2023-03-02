@@ -9,12 +9,15 @@ import {
   CreateComment,
   DeleteComment,
   GetTags,
+  FollowsPosts,
 } from "../conroller/post.js";
 import CheckAuth from "../middleware/CheckAuth.js";
 
 const router = Router();
 
 router.get("/", GetAll);
+
+router.get("/following", CheckAuth, FollowsPosts);
 
 router.post("/", CheckAuth, Create);
 

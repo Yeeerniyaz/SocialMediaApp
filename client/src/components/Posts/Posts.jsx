@@ -34,8 +34,6 @@ const Posts = ({ post, isLoading }) => {
     );
   }
 
-  console.log(dataTags);
-
   if (tags) {
     if (isLoadingTags) {
       return (
@@ -65,7 +63,7 @@ const Posts = ({ post, isLoading }) => {
       );
     } else {
       return (
-        <div style={{ height: "300px" }}>
+        <div style={{ height: "590px" }}>
           <Skeleton />
         </div>
       );
