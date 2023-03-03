@@ -4,32 +4,44 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import Home from "./pages/Home/Home";
-import Tags from "./pages/Tags/Tags";
+import Tags from "./components/Tags/Tags";
 import Profile from "./pages/Profile/Profile";
 import { fetchAuth } from "./redux/slices/auth.js";
 import { fetchGetPost, fetchPopularTags } from "./redux/slices/post";
-import { fetchFollowers } from "./redux/slices/user";
-import Chat from "./pages/Chat/Chat";
+import { fetchFollowers, fetchFollows } from "./redux/slices/user";
+import { Navbar } from "./components/media/MediaNavabr";
+import { Search } from "./pages/Search/Search";
+import { Audience } from "./pages/Audience/Audience";
 
 function App() {
   const dispatch = useDispatch();
+  const [width, setWidth] = React.useState(window.innerWidth);
   React.useEffect(() => {
     dispatch(fetchAuth());
     dispatch(fetchGetPost());
     dispatch(fetchFollowers());
+    dispatch(fetchFollows());
     dispatch(fetchPopularTags());
   }, [dispatch]);
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tags/:tags" element={<Tags />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/profile/:username" element={<Profile />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  window.addEventListener("resize", () => {
+    setWidth(window.innerWidth);
+  });
+
+  
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tags/:tags" element={<Tags />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          {width <= 965 && <Route path="/search" element={<Search />} />}
+          {width <= 965 && <Route path="/audience" element={<Audience />} />}
+        </Routes>
+        {window.location.pathname !== "/auth" && <Navbar />}
+      </BrowserRouter>
+    );
 }
 
 export default App;

@@ -1,9 +1,9 @@
 import React from "react";
 
 import "./Tags.scss";
-import Left from "../../components/HomeLeft/HomeLeft.jsx";
-import Center from "../../components/HomeCenter/HomeCenter.jsx";
-import Right from "../../components/RightCenter/RightCenter.jsx";
+import Left from "../HomeLeft/HomeLeft.jsx";
+import Center from "../HomeCenter/HomeCenter.jsx";
+import Right from "../RightCenter/RightCenter.jsx";
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
       <div className="home">
         <Left />
         <Center />
-        <Right/>
+        <Right />
       </div>
     </div>
   );

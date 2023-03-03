@@ -4,28 +4,20 @@ import { useSelector } from "react-redux";
 import { UilMapMarker, UilBag, UilInstagram } from "@iconscout/react-unicons";
 
 import "./ProfileCard.css";
-import {
-  fetchRemoveFollow,
-  fetchAddFollow,
-  logout,
-} from "../../redux/slices/auth";
+import { fetchRemoveFollow, fetchAddFollow } from "../../redux/slices/auth";
 import { followConventor } from "../../Utils/sorter.js";
-import ProfileEditModal from "../ProfileEditModal/ProfileEditModal.jsx";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Skeleton from "../Skeleton/Skeleton";
 import { followersIncMax, followersIncMin } from "../../redux/slices/user";
+import Follows from "../Follows/Follows";
+import Followers from "../Followers/Followers";
 
 const ProfileCard = ({ profile, isLoading }) => {
-  const { username } = useParams();
   const dispatch = useDispatch();
-  const [openedModal, setOpenedModal] = React.useState(false);
   const me = useSelector((state) => state.auth.data);
   const isFollow = Boolean(me.follows.find((e) => e === profile?._id));
-
-  function Clicklogout() {
-    window.localStorage.removeItem("token");
-    dispatch(logout());
-  }
+  const [openedFollowers, setOpenedFollowers] = React.useState(false);
+  const [openedFollows, setOpenedFollows] = React.useState(false);
 
   if (isLoading !== "loaded") {
     return (
@@ -75,18 +67,29 @@ const ProfileCard = ({ profile, isLoading }) => {
 
           <div className="vl"></div>
 
-          <div className="follow">
+          <div
+            className="follow"
+            onClick={() => {
+              setOpenedFollowers(true);
+            }}
+          >
             <span>{followConventor(profile.followers.length)}</span>
             <span>подписчики</span>
           </div>
 
           <div className="vl"></div>
 
-          <div className="follow">
+          <div
+            className="follow"
+            onClick={() => {
+              setOpenedFollows(true);
+            }}
+          >
             <span>{followConventor(profile.follows.length)}</span>
             <span>подписки</span>
           </div>
         </div>
+
         <hr />
       </div>
 
@@ -120,25 +123,14 @@ const ProfileCard = ({ profile, isLoading }) => {
           </div>
         )}
       </div>
-
-      {username === undefined && (
-        <div className="controler">
-          <ProfileEditModal
-            setOpenedModal={setOpenedModal}
-            openedModal={openedModal}
-          />
-          <div
-            onClick={() => {
-              setOpenedModal(true);
-            }}
-          >
-            Редактировать
-          </div>
-          <button className="button log-btn" onClick={Clicklogout}>
-            Logout
-          </button>
-        </div>
-      )}
+      <Followers
+        openedFollowers={openedFollowers}
+        setOpenedFollowers={setOpenedFollowers}
+      />
+      <Follows
+        openedFollows={openedFollows}
+        setOpenedFollows={setOpenedFollows}
+      />
     </div>
   );
 };

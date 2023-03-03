@@ -24,7 +24,7 @@ export const fetchGetUser = createAsyncThunk(
 
 export const fetchGetPopular = createAsyncThunk(
   "user/fetchGetPopular",
-  async (params) => {
+  async () => {
     const { data } = await axios.get(`/user/popular`);
     return data;
   }
@@ -70,18 +70,18 @@ const UserSlices = createSlice({
         state.status.followers = "error";
         state.followers = state.followers || [];
       }) // ! FOLLOWS
-      // .addCase(fetchFollows.pending, (state) => {
-      //   state.data = [];
-      //   state.status = "loading";
-      // })
-      // .addCase(fetchFollows.fulfilled, (state, action) => {
-      //   state.status = "loaded";
-      //   state.data = action.payload;
-      // })
-      // .addCase(fetchFollows.rejected, (state) => {
-      //   state.status = "error";
-      //   state.data = state.data || [];
-      // }) // ! GET USER
+      .addCase(fetchFollows.pending, (state) => {
+        state.follows = [];
+        state.status.follows = "loading";
+      })
+      .addCase(fetchFollows.fulfilled, (state, action) => {
+        state.status.follows = "loaded";
+        state.follows = action.payload;
+      })
+      .addCase(fetchFollows.rejected, (state) => {
+        state.status.follows = "error";
+        state.follows = state.data;
+      }) // ! GET USER
       .addCase(fetchGetUser.pending, (state) => {
         state.data = [];
         state.status.getUser = "loading";
@@ -112,3 +112,5 @@ const UserSlices = createSlice({
 export const UserReducer = UserSlices.reducer;
 export const { followersIncMin } = UserSlices.actions;
 export const { followersIncMax } = UserSlices.actions;
+export const { followsAdd } = UserSlices.actions;
+export const { followsDelete } = UserSlices.actions;

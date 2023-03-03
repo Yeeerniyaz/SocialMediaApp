@@ -47,6 +47,8 @@ const Post = ({ obj }) => {
   function postDelete() {
     dispatch(fetchDeletePost(obj._id));
     dispatch(removePost(obj._id));
+    const filename = obj.file.split("/").pop();
+    axios.delete(`/send/${filename}`);
   }
 
   function likeButton() {
@@ -70,7 +72,10 @@ const Post = ({ obj }) => {
       <div className="author">
         <div className="text">
           {obj.author?.avatarUrl && (
-            <img src={`http://localhost:5000/${obj.author.avatarUrl}`} alt="" />
+            <img
+              src={`http://192.168.43.127:5000/${obj.author.avatarUrl}`}
+              alt=""
+            />
           )}
           <div>
             <span onClick={() => navigate(`/profile/${obj.author.username}`)}>

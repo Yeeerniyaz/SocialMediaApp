@@ -5,3 +5,19 @@
   max-height: 100vh;
   overflow: auto;
 }
+
+.skeletonHL {
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 1ren;
+}
+
+@media (max-width: 965px) {
+  .homeLeft {
+    display: none;
+  }
+  .skeletonHL {
+    display: none;
+  }
+}

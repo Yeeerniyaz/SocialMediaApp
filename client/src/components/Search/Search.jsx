@@ -81,7 +81,7 @@ function Card({ obj }) {
         }}
       >
         {obj?.avatarUrl && (
-          <img src={`http://localhost:5000/${obj.avatarUrl}`} alt="" />
+          <img src={`http://192.168.43.127:5000/${obj.avatarUrl}`} alt="" />
         )}
         <div className="span ">
           <span>{obj.fristName + " " + obj.lastName}</span>

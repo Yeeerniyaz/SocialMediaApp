@@ -45,6 +45,12 @@ export const followers = async (req, res) => {
 
 export const follows = async (req, res) => {
   try {
+    const user = await User.findOne({ _id: req.userId }).populate(
+      "follows",
+      "fristName lastName avatarUrl username"
+    );
+
+    res.json(user.follows);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

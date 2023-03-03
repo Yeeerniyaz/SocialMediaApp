@@ -60,6 +60,7 @@
   gap: 0.4rem;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .follow > span:nth-of-type(1) {

@@ -1,0 +1,26 @@
+.Follows {
+  background-color: var(--container-color);
+  padding: 20px;
+  border-radius: 1rem;
+  color: white;
+  border: var(--container-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h3 {
+	font-size: x-large;
+  }
+
+  .FollwersCard {
+    display: flex;
+    flex-direction: column;
+    border: none;
+	padding: 0;
+
+    .users {
+      gap: 2rem;
+	  font-size: 15px;
+    }
+  }
+}

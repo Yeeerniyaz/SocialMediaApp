@@ -19,6 +19,7 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
   const avatarRef = useRef();
   const dispatch = useDispatch();
 
+
   const onSubmit = (e) => {
     e.preventDefault();
     setOpenedModal(false);
@@ -49,12 +50,22 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
     }
   };
 
+  const RemoveFile = (e) => {
+    e.preventDefault();
+    setAvatarUrl("");
+    avatarRef.current.value = null;
+    const filename = avatarUrl.split("/").pop();
+    axios.delete(`/send/${filename}`);
+  };
+
+
+
   return (
     <Modal
       padding={-5}
       radius={"1.1rem"}
       withCloseButton={false}
-      size="60%"
+      size="auto"
       overlayOpacity={0.55}
       overlayBlur={3}
       opened={openedModal}
@@ -65,7 +76,7 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
       <div className="ProfileEditModal">
         <form className="infoForm">
           <h3>@{user.username}</h3>
-          <input
+          <textarea
             type="text"
             placeholder="status"
             value={status}
@@ -115,15 +126,7 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
             onChange={(e) => setLocation(e.target.value)}
           />
           {avatarUrl ? (
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                avatarRef.current.value = "";
-                setAvatarUrl("");
-              }}
-            >
-              Удалить аватар
-            </button>
+            <button onClick={RemoveFile}>Удалить аватар</button>
           ) : (
             <button
               onClick={(e) => {
@@ -139,7 +142,7 @@ function ProfileEditModal({ setOpenedModal, openedModal }) {
             <div>
               {avatarUrl && (
                 <img
-                  src={`http://localhost:5000/${avatarUrl}`}
+                  src={`http://192.168.43.127:5000/${avatarUrl}`}
                   alt=""
                   className="image2"
                 />

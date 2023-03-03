@@ -1,23 +1,40 @@
-.FollwersCard {
+.Audience {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: var(--container-color);
-  border: var(--container-border);
-  border-radius: 1rem;
-  padding: 10px;
+  gap: 1rem;
 
-  h3 {
-    padding-left: 10px;
-    margin-bottom: 10px;
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
-  .users {
+
+  .toggle {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .isActive {
+    border-bottom: 2px solid var(--text-color);
+  }
+
+  div > .users {
+    gap: 2rem;
+    font-size: 15px;
+  }
+
+  div > .users {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-radius: 1rem;
     transition: all 0.5s;
-    font-size: small;
+    font-size: large;
+	
 
     &:hover {
       background-color: #00000090;

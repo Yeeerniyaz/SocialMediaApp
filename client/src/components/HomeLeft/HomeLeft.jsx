@@ -17,26 +17,17 @@ const PofileSide = () => {
 
   if (isLoadingMe !== "loaded") {
     return (
-      <>
-        <div
-          style={{
-            height: "700px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <Skeleton />
-          <Skeleton />
-        </div>
-      </>
+      <div className="skeletonHL  homeLeft">
+        <Skeleton />
+        <Skeleton />
+      </div>
     );
   }
 
   if (username === undefined) {
     return (
       <div className="homeLeft">
-        <Search/>
+        <Search />
         <ProfileCard profile={GetMe} isLoading={isLoadingMe} />
         <FollwersCard />
       </div>

@@ -1,0 +1,42 @@
+.navIcon {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.1rem;
+  background-color: var(--container-color);
+  border: var(--container-border);
+  border-radius: 1rem;
+
+  svg {
+    width: 1.5rem;
+    opacity: 0.7;
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 965px) {
+  .navIcon {
+    display: none;
+  }
+  .navIconMedia {
+	display: flex;
+	position: fixed;
+	bottom: 10px;
+	width: 96%;
+	margin-left: 2%;	
+  }
+
+  .ProfileCenter {
+    width: 100vw;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 965px) {
+
+  .navIconMedia {
+    display: none;
+  }
+}

@@ -19,6 +19,7 @@ const ProfileCenter = () => {
   if (isLoadingMe !== "loaded") {
     return (
       <div
+        className="profileMaxSkeleton"
         style={{
           height: "700px",
           display: "flex",

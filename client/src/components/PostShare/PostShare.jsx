@@ -27,6 +27,13 @@ const PostShare = () => {
     }
   };
 
+  const RemoveFile = () => {
+    setFileUrl("");
+    fileRef.current.value = null;
+    const filename = fileUrl.split("/").pop();
+    axios.delete(`/send/${filename}`);
+  };
+
   const onSubmit = async () => {
     const data = await dispatch(fetchCreatePost({ file: fileUrl, title }));
     console.info(data);
@@ -57,12 +64,7 @@ const PostShare = () => {
       {fileUrl && (
         <div className="file">
           <img src={`http://192.168.43.127:5000/${fileUrl}`} alt="" />
-          <UilX
-            onClick={() => {
-              setFileUrl("");
-              fileRef.current.value = null;
-            }}
-          />
+          <UilX onClick={RemoveFile} />
         </div>
       )}
 
@@ -90,12 +92,7 @@ const PostShare = () => {
             alt=""
             controls
           />
-          <UilX
-            onClick={() => {
-              setFileUrl("");
-              fileRef.current.value = null;
-            }}
-          />
+          <UilX onClick={RemoveFile} />
         </div>
       )}
     </div>
