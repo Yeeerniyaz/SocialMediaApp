@@ -1,20 +1,48 @@
 import React from "react";
 
 import "./style.scss";
+import axios from "../../axios";
+export default function Conversations({
+  conversation,
+  currentUser,
+  currentUserStatus,
+}) {
+  const [user, setUser] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-export default function Conversations() {
+  const fullname = user?.fristName + " " + user?.lastName;
+  const avatarUrl =
+    user?.avatarUrl ||
+    "files/default-avatar-profile-trendy-style-social-media-user-icon-187599373.jpg";
+
+  React.useEffect(() => {
+    if (currentUserStatus === "loaded") {
+      const friendId = conversation.members.find((m) => m !== currentUser._id);
+      const getUser = async () => {
+        try {
+          await axios("/user/" + friendId).then(({ data }) => {
+            setUser(data);
+            setIsLoading(false);
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getUser();
+    }
+  }, [currentUserStatus, conversation.members, currentUser._id]);
+
+  if (isLoading) {
+    return (
+      <div className="conversations skeleton" style={{ height: "60px" }}></div>
+    );
+  }
+
   return (
     <div className="conversations">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhitQVLQJtOb8dGKFNaw12COEeSBCEMT6iIQ&usqp=CAU"
-        alt=""
-      />
+      <img src={"http://localhost:5000/" + avatarUrl} alt="" />
       <div>
-        <span>Sarah Smith</span>
-        <span>
-			Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci ducimus, atque earum dolore ab necessitatibus, alias iure quas ratione, asperiores distinctio. Fugit suscipit quisquam laudantium ad soluta fugiat neque in.
-        </span>
-        <span>1 hour ago</span>
+        <span>{fullname}</span>
       </div>
     </div>
   );

@@ -13,9 +13,11 @@ const Home = () => {
   const navigate = useNavigate();
   const isAuth = useSelector(SelectIsAuth);
 
-  if (window.localStorage.getItem("token") && !isAuth) {
-    navigate("/auth");
-  }
+  React.useEffect(() => {
+    if (!window.localStorage.getItem("token") && !isAuth) {
+      return navigate("/auth");
+    }
+  }, [isAuth, navigate]);
 
   return (
     <div className="container">

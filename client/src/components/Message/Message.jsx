@@ -1,24 +1,23 @@
 import React from "react";
+import moment from "moment";
+import "moment/locale/ru";
 
 import "./style.scss";
 
-export default function Message({ own }) {
+export default function Message({ own, message }) {
+  const date = new moment(message.createdAt);
+
   return (
-    <div className={`message ${!!own && "own"}`}>
-      <div className="messageTop">
+    <div className={`message ${own && "own"}`}>
+      <div className={`messageTop ${own && "ownTop"}`}>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhitQVLQJtOb8dGKFNaw12COEeSBCEMT6iIQ&usqp=CAU"
           alt=""
           className="messageImg"
         />
         <div>
-          <span>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo fuga
-            illum quis eum alias incidunt, sit voluptatum magni porro, dolorem
-            expedita illo aperiam soluta quod dolore velit quisquam quos
-            provident?
-          </span>
-          <span>1 hour ago</span>
+          <span>{message.text}</span>
+          <span>{date.calendar()}</span>
         </div>
       </div>
     </div>

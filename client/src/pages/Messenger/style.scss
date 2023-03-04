@@ -65,21 +65,16 @@
     width: 5px;
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
     background: #2a2a2a;
-            border-radius: 5px;
-
+    border-radius: 5px;
   }
 
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #000000;
-            border-radius: 5px;
-
+    border-radius: 5px;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
@@ -90,4 +85,12 @@
 .chatBoxWrapper {
   padding: 20px;
   height: 100%;
+}
+
+.noConvarsationText {
+  font-size: 50px;
+  font-weight: 600;
+  opacity: 0.7;
+  text-align: center;
+  cursor: default;
 }

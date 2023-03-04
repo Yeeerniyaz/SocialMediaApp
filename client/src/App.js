@@ -12,11 +12,12 @@ import { fetchFollowers, fetchFollows } from "./redux/slices/user";
 import { Navbar } from "./components/media/MediaNavabr";
 import { Search } from "./pages/Search/Search";
 import { Audience } from "./pages/Audience/Audience";
-import { Messenger } from './pages/Messenger/Messenger';
+import { Messenger } from "./pages/Messenger/Messenger";
 
 function App() {
   const dispatch = useDispatch();
   const [width, setWidth] = React.useState(window.innerWidth);
+
   React.useEffect(() => {
     dispatch(fetchAuth());
     dispatch(fetchGetPost());
@@ -25,27 +26,24 @@ function App() {
     dispatch(fetchPopularTags());
   }, [dispatch]);
 
-  
-
   window.addEventListener("resize", () => {
     setWidth(window.innerWidth);
   });
 
-  
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tags/:tags" element={<Tags />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/profile/:username" element={<Profile />} />
-          <Route path="/chat" element={<Messenger />} />
-          {width <= 965 && <Route path="/search" element={<Search />} />}
-          {width <= 965 && <Route path="/audience" element={<Audience />} />}
-        </Routes>
-        {window.location.pathname !== "/auth" && <Navbar />}
-      </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/tags/:tags" element={<Tags />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/chat" element={<Messenger />} />
+        {width <= 965 && <Route path="/search" element={<Search />} />}
+        {width <= 965 && <Route path="/audience" element={<Audience />} />}
+      </Routes>
+      {window.location.pathname !== "/auth" && <Navbar />}
+    </BrowserRouter>
+  );
 }
 
 export default App;

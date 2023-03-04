@@ -8,12 +8,15 @@ import {
   follows,
   UserAdd,
   UserDelete,
+  FindUserById,
   UsersFind,
 } from "../conroller/user.js";
 
 const router = Router();
 
 router.get("/find", CheckAuth, UserFindAll);
+
+router.get("/:id", FindUserById)
 
 router.get("/find/:username", UserFindOne);
 

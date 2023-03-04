@@ -30,6 +30,17 @@ export const UserFindOne = async (req, res) => {
   }
 };
 
+export const FindUserById = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    user.password = null;
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 export const followers = async (req, res) => {
   const user = await User.findOne({ _id: req.userId }).populate(
     "followers",

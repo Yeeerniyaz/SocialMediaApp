@@ -54,3 +54,16 @@
   }
 }
 
+.conversations.skeleton {
+  background: linear-gradient(90deg, #181818 8%, #242424 18%, #181818 33%);
+  background-size: 200% 100%;
+  animation: 0.9s shine linear infinite;
+
+  height: 100%;
+
+  @keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+  }
+}
