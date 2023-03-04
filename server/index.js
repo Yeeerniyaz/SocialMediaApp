@@ -4,10 +4,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import Conversation from "./routes/conversation.js";
 import AuthRoutes from "./routes/auth.js";
 import UserRoutes from "./routes/user.js";
 import PostRoutes from "./routes/post.js";
 import FileRoutes from "./routes/file.js";
+import Message from "./routes/message.js";
 
 dotenv.config();
 const app = express();
@@ -26,6 +28,8 @@ app.use("/send", FileRoutes);
 app.use("/auth", AuthRoutes);
 app.use("/user", UserRoutes);
 app.use("/post", PostRoutes);
+app.use("/message", Message);
+app.use("/im", Conversation);
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

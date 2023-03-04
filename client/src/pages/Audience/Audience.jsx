@@ -8,9 +8,16 @@ import { fetchAddFollow } from "../../redux/slices/auth";
 
 import "./style.scss";
 import Skeleton from "../../components/Skeleton/Skeleton";
+import { SelectIsAuth } from "../../redux/slices/auth";
 
 export function Audience() {
+  const navigate = useNavigate();
   const [toggle, setToggle] = React.useState(true);
+  const isAuth = useSelector(SelectIsAuth);
+
+  if (window.localStorage.getItem("token") && !isAuth) {
+    navigate("/auth");
+  }
 
   return (
     <div className="Audience">

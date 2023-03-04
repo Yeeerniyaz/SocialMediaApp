@@ -1,0 +1,60 @@
+.ChatOnline {
+  width: 90%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px auto;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #000000b3;
+  }
+
+  div:nth-of-type(1) {
+    position: relative;
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    div {
+      position: absolute;
+      background-color: #00ff2a;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+
+    span:nth-of-type(1) {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    span:nth-of-type(2) {
+      font-size: medium;
+      opacity: 0.7;
+      font-size: small;
+    }
+
+    span:nth-of-type(3) {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+  }
+}

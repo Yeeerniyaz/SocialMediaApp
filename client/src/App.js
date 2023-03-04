@@ -12,6 +12,7 @@ import { fetchFollowers, fetchFollows } from "./redux/slices/user";
 import { Navbar } from "./components/media/MediaNavabr";
 import { Search } from "./pages/Search/Search";
 import { Audience } from "./pages/Audience/Audience";
+import { Messenger } from './pages/Messenger/Messenger';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function App() {
     dispatch(fetchFollows());
     dispatch(fetchPopularTags());
   }, [dispatch]);
+
+  
 
   window.addEventListener("resize", () => {
     setWidth(window.innerWidth);
@@ -36,6 +39,7 @@ function App() {
           <Route path="/tags/:tags" element={<Tags />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/chat" element={<Messenger />} />
           {width <= 965 && <Route path="/search" element={<Search />} />}
           {width <= 965 && <Route path="/audience" element={<Audience />} />}
         </Routes>

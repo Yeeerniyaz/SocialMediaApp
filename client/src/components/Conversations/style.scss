@@ -1,0 +1,56 @@
+.conversations {
+  width: 90%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px auto;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background: #0000007f;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #000000b3;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+
+    span:nth-of-type(1) {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    span:nth-of-type(2) {
+      font-size: medium;
+      opacity: 0.9;
+      -ms-text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -ms-line-clamp: 2;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      display: -webkit-box;
+      word-wrap: break-word;
+      -webkit-box-orient: vertical;
+      box-orient: vertical;
+    }
+
+    span:nth-of-type(3) {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+  }
+}
+
